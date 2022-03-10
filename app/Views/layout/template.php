@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <!-- <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/fontawesome/all.min.css" type="text/css"> -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/app.css">
     <link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/favicon.svg" type="image/x-icon">
 </head>
@@ -31,47 +32,58 @@
                     </div>
                 </div>
                 <div class="sidebar-menu">
+
+                    <ul class="menu">
+                        <li class="sidebar-title">Home</li>
+
+                        <li class="sidebar-item active">
+                            <a href="index.html" class='sidebar-link'>
+                                <i class="bi bi-house-fill"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--  -->
                     <ul class="menu">
                         <li class="sidebar-title">Jalur</li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq1</span>
+                            <a href="<?= site_url('home/index/1') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Asyiq</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq2</span>
+                            <a href="<?= site_url('home/index/2') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Nur Khotim</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq3</span>
+                            <a href="<?= site_url('home/index/3') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Umar</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq4</span>
+                            <a href="<?= site_url('home/index/4') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Muhyiddin</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq5</span>
+                            <a href="<?= site_url('home/index/5') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 1</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq6</span>
+                            <a href="<?= site_url('home/index/6') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 2</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-person-fill"></i> <span>Asyiq7</span>
+                            <a href="<?= site_url('home/index/7') ?>" class='sidebar-link'>
+                                <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 3</span>
                             </a>
                         </li>
 
@@ -105,7 +117,7 @@
                     </div>
                 </div>
                 <section class="section">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <?= $this->renderSection('content'); ?>
                     </div>
                 </section>
@@ -124,6 +136,7 @@
         </div>
     </div>
     <script src="<?= base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- <script src="<?= base_url(); ?>/assets/vendors/fontawesome/all.min.js"></script> -->
     <script src="<?= base_url(); ?>/assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="<?= base_url(); ?>/assets/js/mazer.js"></script>
