@@ -3,9 +3,9 @@
         $(document).ready(function() {
             //get kabupaten
             $('#prov').change(function(e) {
-                $('#kab').html('<option value="x">Pilih Kabupaten</option>');
-                $('#kec').html('<option value="x">Pilih Kecamatan</option>');
-                $('#desa').html('<option value="x">Pilih Desa</option>');
+                $('#kab').html('<option value="">Pilih Kabupaten</option>');
+                $('#kec').html('<option value="">Pilih Kecamatan</option>');
+                $('#desa').html('<option value="">Pilih Desa</option>');
 
                 e.preventDefault();
                 var prov = $(this).val();
@@ -24,7 +24,7 @@
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            var html = '<option value="x">Pilih Kabupaten</option>';
+                            var html = '<option value="">Pilih Kabupaten</option>';
                             for (var i = 0; i < data.list.length; i++) {
                                 html += '<option value="' + data.list[i].id + '">' + data.list[i].kabupaten + ' (' + data.list[i].kab_kota + ')' + '</option>';
                             }
@@ -38,15 +38,15 @@
                         }
                     });
                 } else {
-                    var html = '<option value="x">Pilih Kabupaten</option>';
+                    var html = '<option value="">Pilih Kabupaten</option>';
                     $('#kab').html(html);
                 }
             });
 
             //get kecamatan
             $('#kab').change(function(e) {
-                $('#kec').html('<option value="x">Pilih Kecamatan</option>');
-                $('#desa').html('<option value="x">Pilih Desa</option>');
+                $('#kec').html('<option value="">Pilih Kecamatan</option>');
+                $('#desa').html('<option value="">Pilih Desa</option>');
 
                 e.preventDefault();
                 var kab = $(this).val();
@@ -65,7 +65,7 @@
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            var html = '<option value="x">Pilih Kecamatan</option>';
+                            var html = '<option value="">Pilih Kecamatan</option>';
                             for (var i = 0; i < data.list.length; i++) {
                                 html += '<option value="' + data.list[i].id + '">' + data.list[i].kecamatan + '</option>';
                             }
@@ -79,14 +79,14 @@
                         }
                     });
                 } else {
-                    var html = '<option value="x">Pilih Kecamatan</option>';
+                    var html = '<option value="">Pilih Kecamatan</option>';
                     $('#kec').html(html);
                 }
             });
 
             //get desa
             $('#kec').change(function(e) {
-                $('#desa').html('<option value="x">Pilih Desa</option>');
+                $('#desa').html('<option value="">Pilih Desa</option>');
 
                 e.preventDefault();
                 var kec = $(this).val();
@@ -105,7 +105,7 @@
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            var html = '<option value="x">Pilih Desa</option>';
+                            var html = '<option value="">Pilih Desa</option>';
                             for (var i = 0; i < data.list.length; i++) {
                                 html += '<option value="' + data.list[i].desa + '">' + data.list[i].desa + '</option>';
                             }
@@ -119,7 +119,7 @@
                         }
                     });
                 } else {
-                    var html = '<option value="x">Pilih Desa</option>';
+                    var html = '<option value="">Pilih Desa</option>';
                     $('#desa').html(html);
                 }
             });

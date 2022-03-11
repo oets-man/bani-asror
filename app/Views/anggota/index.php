@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-5 col-sm-12">
-                            <img class="img-fluid rounded-start" src="<?= $data->lp == 'L' ? base_url('assets/images/faces') . '/male.svg' : base_url('assets/images/faces') . '/female.svg'; ?>" alt="">
+                            <img class="img-fluid rounded-start" src="<?= $data->lp == 'L' ? base_url('assets/images/faces') . '/male-grey.svg' : base_url('assets/images/faces') . '/female-grey.svg'; ?>" alt="">
                         </div>
                         <div class="col-xl-7 col-sm-12">
                             <div class="table-responsive">
@@ -26,7 +26,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Nama</td>
-                                            <td><a href="<?= site_url('home/index/') . $data->id; ?>"><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</a></td>
+                                            <td><a href="<?= site_url('bani/index/') . $data->id; ?>"><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</a></td>
                                         </tr>
                                         <tr>
                                             <td>الإسم</td>
@@ -38,11 +38,11 @@
                                         </tr>
                                         <tr>
                                             <td>Ayah</td>
-                                            <td><a href="<?= site_url('home/index/') . $data->id_ayah; ?>"><?= $data->ayah ?: '-'; ?></a></td>
+                                            <td><a href="<?= site_url('bani/index/') . $data->id_ayah; ?>"><?= $data->ayah ?: '-'; ?></a></td>
                                         </tr>
                                         <tr>
                                             <td>Ibu</td>
-                                            <td><a href="<?= site_url('home/index/') . $data->id_ibu; ?>"><?= $data->ibu ?: '-'; ?></a></td>
+                                            <td><a href="<?= site_url('bani/index/') . $data->id_ibu; ?>"><?= $data->ibu ?: '-'; ?></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -59,7 +59,7 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
-                        <span class="float-end"><i class="bi bi-plus-square-fill"></i></span>
+                        <span class="float-end"><a href="<?= site_url('keluarga/index'); ?>"><i class="bi bi-plus-square-fill"></i></a></span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -79,7 +79,7 @@
                                 foreach ($keluarga as $k) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('home/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
+                                        <td><a href="<?= site_url('bani/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
                                         <td onclick="alert('OK')"><i class="bi bi-caret-down-fill text-info"></i> <?= $k->count_anak ?: '-'; ?></td>
                                         <!-- <td class="text-info" onclick='keluarga()'><i class="bi bi-info-circle"></i></td> -->
                                         <td><?= anchor(site_url('keluarga/index/') . $k->id, '<i class="bi bi-info-circle"></i>'); ?></td>
@@ -115,7 +115,7 @@
                                 foreach ($anak as $a) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('home/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
+                                        <td><a href="<?= site_url('bani/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

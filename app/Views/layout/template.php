@@ -51,42 +51,42 @@
                         <li class="sidebar-title">Jalur</li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/1') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/1') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Asyiq</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/2') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/2') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Nur Khotim</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/3') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/3') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Umar</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/4') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/4') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Muhyiddin</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/5') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/5') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 1</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/6') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/6') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 2</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('home/index/7') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('bani/index/7') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 3</span>
                             </a>
                         </li>
