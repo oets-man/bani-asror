@@ -8,7 +8,7 @@ class Home extends BaseController
 {
     public function __construct()
     {
-        $this->anggotaModel = new AnggotaModel();
+        $this->model = new AnggotaModel();
     }
 
     public function index($id = null)
@@ -16,14 +16,20 @@ class Home extends BaseController
         $id = isset($id) ? $id : 0;
         $data = [
             'title' => 'Data Anggota',
-            'data' => $this->anggotaModel->anggotaDetail($id),
-            'keluarga' => $this->anggotaModel->anggotaKeluarga($id),
-            'anak' => $this->anggotaModel->anggotaAnak($id),
+            'data' => $this->model->anggotaDetail($id),
+            'keluarga' => $this->model->anggotaKeluarga($id),
+            'anak' => $this->model->anggotaAnak($id),
         ];
         return view('anggota/index', $data);
     }
 
-    public function index1()
+    public function add()
+    {
+        return 'OK';
+    }
+
+
+    public function welcome()
     {
         return view('welcome_message');
     }
@@ -32,7 +38,6 @@ class Home extends BaseController
 
         return view('layout/template');
     }
-
     public function dashboard()
     {
         $data = [

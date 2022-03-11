@@ -11,7 +11,7 @@
         <div class="col-xl-4 col-md-6 col-sm-12">
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0"><a href="<?= site_url('home/index/') . $data->id; ?>"><?= $data->nama; ?> (<?= $data->lp; ?>)</a>
+                    <h5 class="my-0">Data
                         <span class="float-end"><i class="bi bi-three-dots"></i></span>
                     </h5>
                 </div>
@@ -24,6 +24,10 @@
                             <div class="table-responsive">
                                 <table class="table mb-0">
                                     <tbody>
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td><a href="<?= site_url('home/index/') . $data->id; ?>"><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</a></td>
+                                        </tr>
                                         <tr>
                                             <td>الإسم</td>
                                             <td><?= $data->nama_arab ?: '-'; ?></a></td>
@@ -66,6 +70,7 @@
                                     <td>No</td>
                                     <td>Pasangan</td>
                                     <td><i class="bi bi-caret-down-square-fill text-info"></i> Anak</td>
+                                    <td><i class="bi bi-info-circle-fill"></i></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,6 +81,8 @@
                                         <td><?= $no++; ?></td>
                                         <td><a href="<?= site_url('home/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
                                         <td onclick="alert('OK')"><i class="bi bi-caret-down-fill text-info"></i> <?= $k->count_anak ?: '-'; ?></td>
+                                        <!-- <td class="text-info" onclick='keluarga()'><i class="bi bi-info-circle"></i></td> -->
+                                        <td><?= anchor(site_url('keluarga/index/') . $k->id, '<i class="bi bi-info-circle"></i>'); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
