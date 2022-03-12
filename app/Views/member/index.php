@@ -59,7 +59,8 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
-                        <span class="float-end"><a href="<?= site_url('family/index/new'); ?>"><i class="bi bi-plus-square-fill"></i></a></span>
+                        <?php $p = strtolower($data->lp) == 'l' ? 's' : 'i'; ?>
+                        <span class="float-end"><a href="<?= site_url('family/index/') . $data->id  . '/' .  $p; ?>"><i class="bi bi-plus-square-fill"></i></a></span>
                     </h5>
                 </div>
                 <div class="card-body">

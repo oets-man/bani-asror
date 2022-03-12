@@ -15,6 +15,10 @@ class Member extends BaseController
     public function index($id = null)
     {
         $id = isset($id) ? $id : 0;
+
+        //set session
+        session()->set(['lastMemberID' => $id]);
+
         $data = [
             'title' => 'Data Anggota',
             'data' => $this->model->membersDetail($id),

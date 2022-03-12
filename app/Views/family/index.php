@@ -6,7 +6,9 @@
 </div>
 <?php
 helper('form');
-echo form_open(site_url('family/update'));
+$url = site_url('family/save');
+$url = $isNew ? $url : $url . '/' . $data->id;
+echo form_open($url);
 // dd($data);
 ?>
 <div class="card-body py-2">
@@ -16,9 +18,7 @@ echo form_open(site_url('family/update'));
         <div class="col-xl-8 col-md-8 col-sm-12">
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Keluarga
-                        <!-- <span class="float-end"><i class="bi bi-plus-square-fill"></i></span> -->
-                    </h5>
+                    <h5 class="my-0">Data Keluarga (<?= $isNew ? 'Baru' : 'Edit'; ?>)</h5>
                 </div>
                 <input type="hidden" name="id" value="<?= $data->id; ?>">
                 <div class="card-body py-4 px-4">
@@ -147,18 +147,12 @@ echo form_open(site_url('family/update'));
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="row">
-                        <div class="col-12">
-                            <label for="exampleFormControlTextarea1" class="form-label">Catatan</label>
-                            <div class="input-group mb-3">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
                 <div class="card-footer p-2 bg-light-info border-0">
+                    <?php if (!$isNew) : ?>
+                        <button type="button" class="btn btn-danger" onclick="hapusFamily('<?= $data->id; ?>')">Hapus</button>
+                    <?php endif; ?>
                     <div class="float-end">
                         <button type="submit" class="btn-success btn">Simpan</button>
                     </div>
@@ -263,7 +257,7 @@ echo form_open(site_url('family/update'));
 
 <?= view('js/ajaxAlamat'); ?>
 <script>
-    function edit(p) {
+    function cari(p) {
         let pasangan = '';
         if (p == 's') {
             pasangan = 'suami';
@@ -299,6 +293,21 @@ echo form_open(site_url('family/update'));
         } else if (p == 'i') {
             alert('tes hapus istri')
         }
+    }
+
+    function hapusFamily(id) {
+        // preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Yakin menghapus keluarga ini?',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "<?= site_url('family/del/'); ?>" + id;
+            }
+        })
     }
 </script>
 <?= $this->endSection(); ?>
