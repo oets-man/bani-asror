@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AnggotaModel extends Model
+class FamilyModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'anggota';
+    protected $table            = 'families';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -40,16 +40,8 @@ class AnggotaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function anggotaDetail($id)
+    public function familiesDetail($id)
     {
-        return $this->db->table('anggota_detail')->where('id', $id)->get()->getFirstRow();
-    }
-    public function anggotaKeluarga($id)
-    {
-        return $this->db->table('anggota_keluarga')->where('id', $id)->get()->getResultObject();
-    }
-    public function anggotaAnak($id)
-    {
-        return $this->db->table('anggota_anak')->where('id', $id)->get()->getResultObject();
+        return $this->db->table('families_detail')->where('id', $id)->get()->getFirstRow();
     }
 }

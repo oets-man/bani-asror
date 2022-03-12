@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KeluargaModel extends Model
+class MemberModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'keluarga';
+    protected $table            = 'members';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -40,8 +40,16 @@ class KeluargaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function keluargaDetail($id)
+    public function membersDetail($id)
     {
-        return $this->db->table('keluarga_detail')->where('id', $id)->get()->getFirstRow();
+        return $this->db->table('members_detail')->where('id', $id)->get()->getFirstRow();
+    }
+    public function membersFamilies($id)
+    {
+        return $this->db->table('members_families')->where('id', $id)->get()->getResultObject();
+    }
+    public function membersChildren($id)
+    {
+        return $this->db->table('members_children')->where('id', $id)->get()->getResultObject();
     }
 }

@@ -26,7 +26,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Nama</td>
-                                            <td><a href="<?= site_url('bani/index/') . $data->id; ?>"><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</a></td>
+                                            <td><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</td>
                                         </tr>
                                         <tr>
                                             <td>الإسم</td>
@@ -38,11 +38,11 @@
                                         </tr>
                                         <tr>
                                             <td>Ayah</td>
-                                            <td><a href="<?= site_url('bani/index/') . $data->id_ayah; ?>"><?= $data->ayah ?: '-'; ?></a></td>
+                                            <td><?= $data->ayah ? anchor(site_url('member/index/') . $data->id_ayah, $data->ayah) : '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Ibu</td>
-                                            <td><a href="<?= site_url('bani/index/') . $data->id_ibu; ?>"><?= $data->ibu ?: '-'; ?></a></td>
+                                            <td><?= $data->ibu ? anchor(site_url('member/index/') . $data->id_ibu, $data->ibu) : '-'; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -59,7 +59,7 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
-                        <span class="float-end"><a href="<?= site_url('keluarga/index'); ?>"><i class="bi bi-plus-square-fill"></i></a></span>
+                        <span class="float-end"><a href="<?= site_url('family/index/new'); ?>"><i class="bi bi-plus-square-fill"></i></a></span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -79,10 +79,10 @@
                                 foreach ($keluarga as $k) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('bani/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
-                                        <td onclick="alert('OK')"><i class="bi bi-caret-down-fill text-info"></i> <?= $k->count_anak ?: '-'; ?></td>
-                                        <!-- <td class="text-info" onclick='keluarga()'><i class="bi bi-info-circle"></i></td> -->
-                                        <td><?= anchor(site_url('keluarga/index/') . $k->id, '<i class="bi bi-info-circle"></i>'); ?></td>
+                                        <td><a href="<?= site_url('member/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
+                                        <td onclick="alert('OK')"><i class="bi bi-caret-down-fill text-info"></i> <?= $k->children_count ?: '-'; ?></td>
+                                        <!-- <td class="text-info" onclick='family()'><i class="bi bi-info-circle"></i></td> -->
+                                        <td><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -115,7 +115,7 @@
                                 foreach ($anak as $a) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('bani/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
+                                        <td><a href="<?= site_url('member/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

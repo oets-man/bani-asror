@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo csrf_hash(); ?>">
 
-    <title> <?= isset($title) ? $title : 'Bani Asror'; ?> </title>
+    <title> <?= isset($title) ? $title : 'member Asror'; ?> </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -51,42 +51,42 @@
                         <li class="sidebar-title">Jalur</li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/1') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/1') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Asyiq</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/2') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/2') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Nur Khotim</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/3') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/3') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Umar</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/4') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/4') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/male.svg'); ?>" alt="" style="height:20px;"> <span>Muhyiddin</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/5') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/5') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 1</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/6') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/6') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 2</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="<?= site_url('bani/index/7') ?>" class='sidebar-link'>
+                            <a href="<?= site_url('member/index/7') ?>" class='sidebar-link'>
                                 <img src="<?= base_url('assets/images/faces/female.svg'); ?>" alt="" style="height:20px;"> <span>Bintu Asror 3</span>
                             </a>
                         </li>

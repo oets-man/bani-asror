@@ -6,7 +6,7 @@
 </div>
 <?php
 helper('form');
-echo form_open(site_url('keluarga/update'));
+echo form_open(site_url('family/update'));
 // dd($data);
 ?>
 <div class="card-body py-2">
@@ -34,11 +34,12 @@ echo form_open(site_url('keluarga/update'));
                                     <h6>Suami</h6>
                                     <input type="hidden" name="id_suami" value="<?= $data->id_suami !== null ? $data->id_suami : NULL; ?>">
                                     <h5>
-                                        <?= $data->id_suami !== null ? anchor(site_url('bani/index/') . $data->id_suami, $data->suami) : '-'; ?>
+                                        <?= $data->id_suami !== null ? anchor(site_url('member/index/') . $data->id_suami, $data->suami) : '-'; ?>
                                     </h5>
-                                    <div class="mt-2">
-                                        <button class="btn btn-outline-danger" type="button" id="btnsuami" onclick="hapus('s')">Hapus</button>
-                                        <button class="btn btn-outline-warning" type="button" id="btnsuami" onclick="edit('s')">Edit</button>
+                                    <div class="py-2">
+                                        <button class="mt-1 btn btn-outline-success" type="button" id="" onclick="baru('s')">Baru</button>
+                                        <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('s')">Cari</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('s')">Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -54,11 +55,12 @@ echo form_open(site_url('keluarga/update'));
                                     <h6>Istri</h6>
                                     <input type="hidden" name="id_istri" value="<?= $data->id_istri !== null ? $data->id_istri : NULL; ?>">
                                     <h5>
-                                        <?= $data->id_istri !== null ? anchor(site_url('bani/index/') . $data->id_istri, $data->istri) : '-'; ?>
+                                        <?= $data->id_istri !== null ? anchor(site_url('member/index/') . $data->id_istri, $data->istri) : '-'; ?>
                                     </h5>
-                                    <div class="mt-2">
-                                        <button class="btn btn-outline-danger" type="button" id="btnistri" onclick="hapus('i')">Hapus</button>
-                                        <button class="btn btn-outline-warning" type="button" id="btnistri" onclick="edit('i')">Edit</button>
+                                    <div class="py-2">
+                                        <button class="mt-1 btn btn-outline-success" type="button" id="" onclick="baru('i')">Baru</button>
+                                        <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('i')">Cari</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('i')">Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +196,7 @@ echo form_open(site_url('keluarga/update'));
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <?php
     helper('form');
-    echo form_open('bani/add');
+    echo form_open('member/add');
     ?>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -285,6 +287,10 @@ echo form_open(site_url('keluarga/update'));
                 $('#add-anggota').modal('show');
             }
         });
+    }
+
+    function baru(p) {
+
     }
 
     function hapus(p) {

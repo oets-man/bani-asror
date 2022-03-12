@@ -4,27 +4,46 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AlamatModel;
-use App\Models\KeluargaModel;
-use PHPUnit\Framework\MockObject\Stub\ReturnReference;
+use App\Models\FamilyModel;
 
-class Keluarga extends BaseController
+class Family extends BaseController
 {
     public function __construct()
     {
-        $this->model = new KeluargaModel();
+        $this->model = new FamilyModel();
         $this->alamat = new AlamatModel;
     }
 
     public function index($id = null)
     {
-        if (!is_null($id)) {
-            $keluarga   = $this->model->keluargaDetail($id);
+
+        if (is_null($id)) return false;
+
+        if ($id !== 'new') {
+            $keluarga   = $this->model->familiesDetail($id);
+            $keluarga->new = false;
             $provinsi   = $this->alamat->getProvinsi()->getResult();
             $kabupaten  = $this->alamat->getKabupaten($keluarga->id_prov)->getResult();
             $kecamatan  = $this->alamat->getKecamatan($keluarga->id_kab)->getResult();
             $desa       = $this->alamat->getDesa($keluarga->id_kec)->getResult();
+            // dd($keluarga);
         } else {
-            $keluarga   = [];
+            $keluarga   = [
+                'id' => null,
+                'id_suami' => null,
+                'id_istri' => null,
+                'suami' => null,
+                'istri' => null,
+                'tgl_nikah' => null,
+                'cerai' => null,
+                'id_prov' => null,
+                'id_kab' => null,
+                'id_kec' => null,
+                'desa' => null,
+                'jl' => null,
+                'new' => true,
+            ];
+            $keluarga = (object) $keluarga;
             $provinsi   = $this->alamat->getProvinsi()->getResult();
             $kabupaten  = [];
             $kecamatan  = [];
@@ -40,7 +59,8 @@ class Keluarga extends BaseController
             'kecamatan'     => $kecamatan,
             'desa'          => $desa,
         ];
-        return view('keluarga/index', $data);
+        // dd($data);
+        return view('family/index', $data);
     }
     public function update()
     {
