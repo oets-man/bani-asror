@@ -5,7 +5,7 @@
     <?= $title; ?>
 </div>
 <?php
-helper('form');
+// helper('form');
 $url = site_url('family/save');
 $url = $isNew ? $url : $url . '/' . $data->id;
 echo form_open($url);
@@ -28,12 +28,12 @@ echo form_open($url);
                         <div class="col-xl-6 col-sm-12 mb-4">
                             <div class="row">
                                 <div class="col-xl-5 col-md-6 col-sm-12">
-                                    <img src="<?= base_url('assets/images/faces/male-grey.svg'); ?>" class="img-thumbnail">
+                                    <img id="avatar_suami" src="<?= base_url('/assets/images/avatars/') . '/' . $data->avatar_suami; ?>" class="img-thumbnail">
                                 </div>
                                 <div class="col-xl-7 col-md-6 col-sm-12">
                                     <h6>Suami</h6>
-                                    <input type="hidden" name="id_suami" value="<?= $data->id_suami !== null ? $data->id_suami : NULL; ?>">
-                                    <h5>
+                                    <input type="hidden" name="id_suami" id="id_suami" value="<?= $data->id_suami !== null ? $data->id_suami : NULL; ?>">
+                                    <h5 id="suami">
                                         <?= $data->id_suami !== null ? anchor(site_url('member/index/') . $data->id_suami, $data->suami) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
@@ -49,12 +49,12 @@ echo form_open($url);
                         <div class="col-xl-6 col-sm-12 mb-4">
                             <div class="row">
                                 <div class="col-xl-5 col-md-6 col-sm-12">
-                                    <img src="<?= base_url('assets/images/faces/female-grey.svg'); ?>" class="img-thumbnail">
+                                    <img id="avatar_istri" src="<?= base_url('/assets/images/avatars/') . '/' . $data->avatar_istri; ?>" class="img-thumbnail">
                                 </div>
                                 <div class="col-xl-7 col-md-6 col-sm-12">
                                     <h6>Istri</h6>
-                                    <input type="hidden" name="id_istri" value="<?= $data->id_istri !== null ? $data->id_istri : NULL; ?>">
-                                    <h5>
+                                    <input type="hidden" name="id_istri" id="id_istri" value="<?= $data->id_istri !== null ? $data->id_istri : NULL; ?>">
+                                    <h5 id="istri">
                                         <?= $data->id_istri !== null ? anchor(site_url('member/index/') . $data->id_istri, $data->istri) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
@@ -67,7 +67,7 @@ echo form_open($url);
                         </div>
                     </div>
 
-
+                    <!-- tanggal nikah status cerai -->
                     <div class="row">
                         <div class="col-xl-6 col-sm-12">
                             <label for="" class="form-label">Tanggal Pernikahan</label>
@@ -182,15 +182,8 @@ echo form_open($url);
 <?= form_close(); ?>
 
 <!-- modal -->
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-anggota">
-    modal
-</button>
-
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <?php
-    helper('form');
-    echo form_open('member/add');
+    <?= form_open('member/save', ['id' => 'save-member']);
     ?>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -225,7 +218,7 @@ echo form_open($url);
                     <label for="" class="form-label">Tanggal Wafat</label>
                     <input type="date" class="form-control" name="tgl_wafat" id="">
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
                     <select class="form-select" name="lp" aria-label="">
                         <option selected value="">Pilih</option>
@@ -257,6 +250,68 @@ echo form_open($url);
 
 <?= view('js/ajaxAlamat'); ?>
 <script>
+    $(document).ready(function() {
+        $('#save-member').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "post",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    $('#add-anggota').modal('hide');
+                    if (response.errors) {
+                        alert('error');
+                    } else {
+                        var site = "<?= site_url('member/index/') ?>";
+                        Swal.fire('Sukses', response.message, 'success');
+                        var pasangan = "<a href='" + site + response.data.id + "'>" + response.data.nama + "</a>";
+                        var avatar = "<?= base_url(); ?>" + "/assets/images/avatars/" + response.data.avatar;
+                        if (response.data.lp == 'L') {
+                            $('#suami').html(pasangan);
+                            $('#id_suami').attr('value', response.data.id);
+                            $('#avatar_suami').attr('src', avatar);
+                        } else if (response.data.lp == 'P') {
+                            $('#istri').html(pasangan);
+                            $('#id_istri').attr('value', response.data.id);
+                            $('#avatar_istri').attr('src', avatar);
+                        }
+                    }
+                    $('meta[name="csrf-token"]').remove();
+                    $('head').append('<meta name="csrf-token" content=' + response.csrf_token + '>');
+                    $('input[name="csrf_test_name"]').val(response.csrf_token);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+        });
+    });
+
+    function baru(p) {
+        var html = '';
+        if (p == 's') {
+            html = `
+                <div class="mb-3" id="input-lp">
+                    <label for="" class="form-label">Jenis Kelamin</label>
+                    <select readonly class="form-select" name="lp" aria-label="">
+                        <option selected value="L">Laki-Laki</option>
+                    </select>
+                </div>`;
+        } else if (p == 'i') {
+            html = `
+                <div class="mb-3" id="input-lp">
+                    <label for="" class="form-label">Jenis Kelamin</label>
+                    <select readonly class="form-select" name="lp" aria-label="">
+                        <option selected value="P">Perempuan</option>
+                    </select>
+                </div>`;
+        }
+        $('#add-anggota').modal('show');
+        $('#input-lp').html(html);
+
+    }
+
     function cari(p) {
         let pasangan = '';
         if (p == 's') {
@@ -283,10 +338,6 @@ echo form_open($url);
         });
     }
 
-    function baru(p) {
-
-    }
-
     function hapus(p) {
         if (p == 's') {
             alert('tes hapus suami')
@@ -296,7 +347,6 @@ echo form_open($url);
     }
 
     function hapusFamily(id) {
-        // preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Yakin menghapus keluarga ini?',

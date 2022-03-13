@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-5 col-sm-12">
-                            <img class="img-fluid rounded-start" src="<?= $data->lp == 'L' ? base_url('assets/images/faces') . '/male-grey.svg' : base_url('assets/images/faces') . '/female-grey.svg'; ?>" alt="">
+                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $data->avatar; ?>" alt="">
                         </div>
                         <div class="col-xl-7 col-sm-12">
                             <div class="table-responsive">
@@ -70,8 +70,8 @@
                                 <tr>
                                     <td>No</td>
                                     <td>Pasangan</td>
-                                    <td><i class="bi bi-caret-down-square-fill text-info"></i> Anak</td>
-                                    <td><i class="bi bi-info-circle-fill"></i></td>
+                                    <td>Anak</td>
+                                    <td class="text-end"><i class="bi bi-info-circle-fill"></i></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,9 +81,8 @@
                                     <tr>
                                         <td><?= $no++; ?></td>
                                         <td><a href="<?= site_url('member/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
-                                        <td onclick="alert('OK')"><i class="bi bi-caret-down-fill text-info"></i> <?= $k->children_count ?: '-'; ?></td>
-                                        <!-- <td class="text-info" onclick='family()'><i class="bi bi-info-circle"></i></td> -->
-                                        <td><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
+                                        <td><?= $k->children_count ?: '-'; ?></td>
+                                        <td class="text-end"><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

@@ -20,15 +20,22 @@ class Family extends BaseController
     {
 
         if (is_null($id)) return false;
+        session()->set(['lastFamilyID' => $id]);
 
         if (is_null($p)) {
             //not new
             $family   = $this->model->familiesDetail($id);
             if (!$family) return "Not found family $id";
+
+            $family->avatar_suami = $family->avatar_suami ?: 'male.svg';
+            $family->avatar_istri = $family->avatar_istri ?: 'female.svg';
+
             $provinsi   = $this->alamat->getProvinsi()->getResult();
             $kabupaten  = $this->alamat->getKabupaten($family->id_prov)->getResult();
             $kecamatan  = $this->alamat->getKecamatan($family->id_kab)->getResult();
             $desa       = $this->alamat->getDesa($family->id_kec)->getResult();
+
+            // dd($family);
         } else {
             $member = new MemberModel();
             $member = $member->membersDetail($id);
@@ -39,6 +46,8 @@ class Family extends BaseController
                 'id_istri' => null,
                 'suami' => null,
                 'istri' => null,
+                'avatar_suami' => null,
+                'avatar_istri' => null,
                 'tgl_nikah' => null,
                 'cerai' => null,
                 'id_prov' => null,
@@ -80,7 +89,7 @@ class Family extends BaseController
     {
         // dd($id);
         $data = $this->request->getPost();
-        // d($data);
+        // dd($data);
         $data['id_suami'] = strlen($data['id_suami']) !== 0 ? intval($data['id_suami']) :  NULL;
         $data['id_istri'] = strlen($data['id_istri']) !== 0 ? intval($data['id_istri']) :  NULL;
         $data['tgl_nikah'] = strlen($data['tgl_nikah']) !== 0 ? $data['tgl_nikah'] :  NULL;
@@ -89,8 +98,9 @@ class Family extends BaseController
         $data['id_kec'] = strlen($data['id_kec']) !== 0 ? strval($data['id_kec']) :  NULL;
 
         if ($id) {
+            // dd($data);
             $this->model->update($id, $data);
-        } {
+        } else {
             $this->model->insert($data);
             $id = $this->model->getInsertID();
         }
