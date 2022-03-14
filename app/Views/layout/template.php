@@ -41,14 +41,14 @@
                         <li class="sidebar-title">Home</li>
 
                         <li class="sidebar-item active">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="<?= site_url(); ?>" class='sidebar-link'>
                                 <i class="bi bi-house-fill"></i> <span>Dashboard</span>
                             </a>
                         </li>
                     </ul>
                     <!--  -->
                     <ul class="menu">
-                        <li class="sidebar-title">Jalur</li>
+                        <li class="sidebar-title">Bani</li>
 
                         <li class="sidebar-item">
                             <a href="<?= site_url('member/index/1') ?>" class='sidebar-link'>

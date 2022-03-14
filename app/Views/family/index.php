@@ -2,20 +2,17 @@
 
 <?= $this->section('content') ?>
 <div class="card-header h5 bg-light-success text-success py-3">
-    <?= $title; ?>
+    <?= $header; ?>
 </div>
-<?php
-// helper('form');
-$url = site_url('family/save');
-$url = $isNew ? $url : $url . '/' . $data->id;
-echo form_open($url);
-// dd($data);
-?>
 <div class="card-body py-2">
     <div class="row">
-
-        <!-- data ortu -->
+        <!-- data pasangan -->
         <div class="col-xl-8 col-md-8 col-sm-12">
+            <?php
+            $url = site_url('family/save');
+            $url = $isNew ? $url : $url . '/' . $data->id;
+            echo form_open($url);
+            ?>
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data Keluarga (<?= $isNew ? 'Baru' : 'Edit'; ?>)</h5>
@@ -37,7 +34,7 @@ echo form_open($url);
                                         <?= $data->id_suami !== null ? anchor(site_url('member/index/') . $data->id_suami, $data->suami) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-success" type="button" id="" onclick="baru('s')">Baru</button>
+                                        <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('s')">Baru</button>
                                         <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('s')">Cari</button>
                                         <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('s')">Hapus</button>
                                     </div>
@@ -58,7 +55,7 @@ echo form_open($url);
                                         <?= $data->id_istri !== null ? anchor(site_url('member/index/') . $data->id_istri, $data->istri) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-success" type="button" id="" onclick="baru('i')">Baru</button>
+                                        <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('i')">Baru</button>
                                         <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('i')">Cari</button>
                                         <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('i')">Hapus</button>
                                     </div>
@@ -151,40 +148,73 @@ echo form_open($url);
 
                 <div class="card-footer p-2 bg-light-info border-0">
                     <?php if (!$isNew) : ?>
-                        <button type="button" class="btn btn-danger" onclick="hapusFamily('<?= $data->id; ?>')">Hapus</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteFamily('<?= $data->id; ?>')">Hapus</button>
                     <?php endif; ?>
                     <div class="float-end">
                         <button type="submit" class="btn-success btn">Simpan</button>
                     </div>
                 </div>
             </div>
+            <?= form_close(); ?>
         </div>
 
         <!-- data anak -->
         <div class="col-xl-4 col-md-4 col-sm-12">
-            <div class="card">
-                <div class="card-header">Anak</div>
-                <div class="card-body">
-                    <ul>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                    </ul>
+            <?= form_open('child/save'); ?>
+            <div class="card shadow my-4">
+                <div class="card-header py-2 bg-light-info">
+                    <h5 class="my-0">Data Anak</h5>
+                </div>
+                <div class="card-body py-4 px-4">
+                    <div class="table-responsive">
+                        <?php if (!$isNew) : ?>
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <td>No</td>
+                                        <td>Anak</td>
+                                        <td class="text-end">Aksi</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="input-child">
+                                    <?php
+                                    $no = 1;
+                                    foreach ($child as $c) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <!-- <td><a href="<?= site_url('member/index/') . $c->id_member; ?>"><?= $c->nama ?: '-'; ?></a></td> -->
+                                            <td><?= anchor(site_url('member/index/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
+                                            <td class="text-end">
+                                                <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
+                                                <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+
+                <div class="card-footer p-2 bg-light-info border-0">
+                    <button type="button" class="btn-primary btn" onclick="baru('a');">Baru</button>
+                    <button type="button" class="btn-info btn">Cari</button>
+                    <div class="float-end">
+                        <button type="submit" class="btn-success btn">Simpan</button>
+                    </div>
                 </div>
             </div>
+            <?= form_close(); ?>
         </div>
+
     </div>
 </div>
-<?= form_close(); ?>
+
 
 <!-- modal -->
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <?= form_open('member/save', ['id' => 'save-member']);
-    ?>
+    <?= form_open('member/save', ['id' => 'save-member']); ?>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,7 +264,7 @@ echo form_open($url);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-success">Simpan</button>
             </div>
         </div>
     </div>
@@ -264,22 +294,38 @@ echo form_open($url);
                         alert('error');
                     } else {
                         var site = "<?= site_url('member/index/') ?>";
-                        Swal.fire('Sukses', response.message, 'success');
+                        Swal.fire(
+                            'Sukses',
+                            response.message + "\n" + 'Pastikan Anda menekan tombol simpan untuk menyimpan perubahan.',
+                            'success');
                         var pasangan = "<a href='" + site + response.data.id + "'>" + response.data.nama + "</a>";
                         var avatar = "<?= base_url(); ?>" + "/assets/images/avatars/" + response.data.avatar;
-                        if (response.data.lp == 'L') {
+
+                        if (response.data.member_add == 's') {
                             $('#suami').html(pasangan);
                             $('#id_suami').attr('value', response.data.id);
                             $('#avatar_suami').attr('src', avatar);
-                        } else if (response.data.lp == 'P') {
+
+                        } else if (response.data.member_add == 'i') {
                             $('#istri').html(pasangan);
                             $('#id_istri').attr('value', response.data.id);
                             $('#avatar_istri').attr('src', avatar);
+
+                        } else if (response.data.member_add == 'a') {
+                            var html = `
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="id_family[]" value="` + "<?= $data->id ?>" + `">
+                                        <input type="hidden" name="id_member[]" value="` + response.data.id + `">
+                                    </td>
+                                    <td>` + response.data.nama + ' (' + response.data.lp + ')' + `</td>
+                                    <td class="text-sm text-info text-end">Belum disimpan</td>
+                                </tr>`;
+                            $('#input-child').append(html);
                         }
+                        console.log(response);
                     }
-                    $('meta[name="csrf-token"]').remove();
-                    $('head').append('<meta name="csrf-token" content=' + response.csrf_token + '>');
-                    $('input[name="csrf_test_name"]').val(response.csrf_token);
+                    newToken(response.csrf_token);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
@@ -288,28 +334,47 @@ echo form_open($url);
         });
     });
 
-    function baru(p) {
+    function newToken(token) {
+        $('meta[name="csrf-token"]').remove();
+        $('head').append('<meta name="csrf-token" content=' + token + '>');
+        $('input[name="csrf_test_name"]').val(token);
+    }
+
+    // function getToken() {
+    //     return 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content');
+    // }
+
+    function baru(p = null) {
         var html = '';
         if (p == 's') {
             html = `
-                <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
                     <select readonly class="form-select" name="lp" aria-label="">
                         <option selected value="L">Laki-Laki</option>
                     </select>
-                </div>`;
+                    <input type="hidden" name="member_add" value="s">
+                    `;
         } else if (p == 'i') {
             html = `
-                <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
                     <select readonly class="form-select" name="lp" aria-label="">
                         <option selected value="P">Perempuan</option>
                     </select>
-                </div>`;
+                    <input type="hidden" name="member_add" value="i">
+                    `;
+        } else if (p == 'a') {
+            html = `
+                    <label for="" class="form-label">Jenis Kelamin</label>
+                    <select class="form-select" name="lp" aria-label="">
+                        <option selected value="">Pilih</option>
+                        <option value="L">Laki-Laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                    <input type="hidden" name="member_add" value="a">
+                    `;
         }
-        $('#add-anggota').modal('show');
         $('#input-lp').html(html);
-
+        $('#add-anggota').modal('show');
     }
 
     function cari(p) {
@@ -340,13 +405,22 @@ echo form_open($url);
 
     function hapus(p) {
         if (p == 's') {
-            alert('tes hapus suami')
+            $('#suami').html(null);
+            $('#id_suami').attr('value', null);
+            $('#avatar_suami').attr('src', null);
         } else if (p == 'i') {
-            alert('tes hapus istri')
+            $('#istri').html(null);
+            $('#id_istri').attr('value', null);
+            $('#avatar_istri').attr('src', null);
         }
+        Swal.fire(
+            'Hapus pasangan?',
+            'Tekan tombol simpan untuk menyimpan perubahan, atau refresh halaman jika ingin membatalkan.',
+            'warning'
+        )
     }
 
-    function hapusFamily(id) {
+    function deleteFamily(id) {
         Swal.fire({
             icon: 'warning',
             title: 'Yakin menghapus keluarga ini?',
@@ -355,9 +429,58 @@ echo form_open($url);
             cancelButtonText: 'Tidak',
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "<?= site_url('family/del/'); ?>" + id;
+                window.location.href = "<?= site_url('family/delete/'); ?>" + id;
             }
         })
+    }
+
+    function deleteChild(id) {
+        Swal.fire({
+            title: 'Kamu yakin?',
+            text: "Aksi ini tidak dapat dibatalkan.",
+            icon: 'warning',
+            footer: 'Aksi ini hanya menghapus data anak, bukan data anggota.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Gagal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "<?= site_url('child/delete'); ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response == true) {
+                            location.reload();
+                            //reload masih bermasalah
+                        } else {
+                            Swal.fire(
+                                'Opps..',
+                                'Data gagal dihapus.',
+                                'warning'
+                            );
+                        }
+                    },
+                    error: function(xhr, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError)
+                    }
+                });
+            }
+        });
+    }
+
+    function editMember(id) {
+        alert(id + '~ belum selesai');
     }
 </script>
 <?= $this->endSection(); ?>

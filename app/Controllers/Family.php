@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AlamatModel;
+use App\Models\ChildModel;
 use App\Models\FamilyModel;
 use App\Models\MemberModel;
 use PDO;
@@ -14,12 +15,13 @@ class Family extends BaseController
     {
         $this->model = new FamilyModel();
         $this->alamat = new AlamatModel;
+        $this->child = new ChildModel();
     }
 
     public function index($id = null, $p = null)
     {
 
-        if (is_null($id)) return false;
+        if (is_null($id)) return exit('ID not found');
         session()->set(['lastFamilyID' => $id]);
 
         if (is_null($p)) {
@@ -34,9 +36,11 @@ class Family extends BaseController
             $kabupaten  = $this->alamat->getKabupaten($family->id_prov)->getResult();
             $kecamatan  = $this->alamat->getKecamatan($family->id_kab)->getResult();
             $desa       = $this->alamat->getDesa($family->id_kec)->getResult();
+            $child      = $this->child->childrenFamily($id);
 
             // dd($family);
         } else {
+            // is new
             $member = new MemberModel();
             $member = $member->membersDetail($id);
             if (!$member) return "Not found member $id";
@@ -46,8 +50,8 @@ class Family extends BaseController
                 'id_istri' => null,
                 'suami' => null,
                 'istri' => null,
-                'avatar_suami' => null,
-                'avatar_istri' => null,
+                'avatar_suami' => 'male.svg',
+                'avatar_istri' => 'female.svg',
                 'tgl_nikah' => null,
                 'cerai' => null,
                 'id_prov' => null,
@@ -70,17 +74,19 @@ class Family extends BaseController
             $kabupaten  = [];
             $kecamatan  = [];
             $desa       = [];
+            $child      = [];
         }
 
         $data = [
             'title'         => 'Keluarga',
-            'header'        => 'Keluarga',
+            'header'        => 'Data Keluarga',
             'data'          => $family,
             'provinsi'      => $provinsi,
             'kabupaten'     => $kabupaten,
             'kecamatan'     => $kecamatan,
             'desa'          => $desa,
             'isNew'         => $p ? true : false,
+            'child'         => $child,
         ];
         // dd($data);
         return view('family/index', $data);
@@ -106,7 +112,8 @@ class Family extends BaseController
         }
         return redirect()->to(site_url('family/index/') . $id);
     }
-    public function del($id)
+
+    public function delete($id)
     {
         try {
             $this->model->delete($id);

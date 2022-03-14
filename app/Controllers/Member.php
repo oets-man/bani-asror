@@ -27,7 +27,8 @@ class Member extends BaseController
         }
 
         $data = [
-            'title' => 'Data Anggota',
+            'title' => 'Anggota',
+            'header' => 'Data Anggota',
             'data' => $member,
             'keluarga' => $this->model->membersFamilies($id),
             'anak' => $this->model->membersChildren($id),
@@ -39,6 +40,13 @@ class Member extends BaseController
     {
         if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
         $data = array_filter($this->request->getPost());
+
+        //get from suami, istri ,anak
+        $member_add = isset($data['member_add']) ? $data['member_add'] : null;
+        if (isset($data['member_add'])) {
+            unset($data['member_add']);
+        }
+
         if (!$id) {
             //insert
             $this->model->insert($data);
@@ -54,10 +62,12 @@ class Member extends BaseController
                 'nama' => $member['nama'],
                 'lp' => $member['lp'],
                 'avatar' => $avatar,
+                'member_add' => $member_add,
             ];
             $errors = null;
             $message = 'Data baru berhasil ditambahkan.';
         } else {
+            //update
             $data = [];
             $errors = [];
             $message = null;
