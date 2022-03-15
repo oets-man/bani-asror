@@ -75,4 +75,9 @@ class Member extends BaseController
         $response = ['data' => $data, 'message' => $message, 'errors' => $errors, 'csrf_token' => csrf_hash()];
         echo json_encode($response);
     }
+
+    public function modal($id = null)
+    {
+        return view('member/modal');
+    }
 }

@@ -13,37 +13,38 @@
                     <div class="float-end">
                         <small class="text-end text-info">Tulis nama tanpa gelar kehormatan. </small>
                     </div>
-                    <input type="text" class="form-control" name="nama" id="" placeholder="Nama lengkap">
+                    <input type="hidden" class="form-control" name="id" id="id">
+                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama lengkap">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">الاسم</label>
-                    <input type="text" class="form-control" name="nama_arab" id="" placeholder="الاسم بالعربية">
+                    <input type="text" class="form-control" name="nama_arab" id="nama_arab" placeholder="الاسم بالعربية">
                 </div>
 
                 <div class="mb-3">
                     <label for="" class="form-label">Alias</label>
-                    <input type="text" class="form-control" name="alias" id="" placeholder="Panggilan, julukan, nama lain, ...">
+                    <input type="text" class="form-control" name="alias" id="alias" placeholder="Panggilan, julukan, nama lain, ...">
                 </div>
 
                 <div class="mb-3">
                     <label for="" class="form-label">Tanggal Lahir</label>
-                    <input type="date" class="form-control" name="tgl_lahir" id="">
+                    <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Tanggal Wafat</label>
-                    <input type="date" class="form-control" name="tgl_wafat" id="">
+                    <input type="date" class="form-control" name="tgl_wafat" id="tgl_wafat">
                 </div>
                 <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
-                    <select class="form-select" name="lp" aria-label="">
+                    <select class="form-select" name="lp" aria-label="" id="lp">
                         <option selected value="">Pilih</option>
                         <option value="L">Laki-Laki</option>
                         <option value="P">Perempuan</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Foto</label>
-                    <input disabled class="form-control" type="file" name="avatar" id="formFile">
+                    <label for="avatar" class="form-label">Foto</label>
+                    <input disabled class="form-control" type="file" name="avatar" id="avatar">
                     <small>Belum siap</small>
                 </div>
             </div>
