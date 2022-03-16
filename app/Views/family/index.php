@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn-primary btn" onclick="baru('a');">Baru</button>
+                    <button type="button" class="btn-primary btn" onclick="baru('a','<?= $c->id_family; ?>');" id="abaru">Baru</button>
                     <button type="button" class="btn-info btn">Cari</button>
                     <div class="float-end">
                         <button type="submit" class="btn-success btn">Simpan</button>
@@ -213,7 +213,8 @@
 
 
 <!-- modal -->
-<?= view('member/modal'); ?>
+<?php //echo view('member/modal'); 
+?>
 
 <?= $this->endSection() ?>
 
@@ -284,42 +285,53 @@
         $('input[name="csrf_test_name"]').val(token);
     }
 
-    // function getToken() {
-    //     return 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content');
-    // }
-
-    function baru(p = null) {
-        var html = '';
-        if (p == 's') {
-            html = `
-                    <label for="" class="form-label">Jenis Kelamin</label>
-                    <select readonly class="form-select" name="lp" aria-label="">
-                        <option selected value="L">Laki-Laki</option>
-                    </select>
-                    <input type="hidden" name="member_add" value="s">
-                    `;
-        } else if (p == 'i') {
-            html = `
-                    <label for="" class="form-label">Jenis Kelamin</label>
-                    <select readonly class="form-select" name="lp" aria-label="">
-                        <option selected value="P">Perempuan</option>
-                    </select>
-                    <input type="hidden" name="member_add" value="i">
-                    `;
-        } else if (p == 'a') {
-            html = `
-                    <label for="" class="form-label">Jenis Kelamin</label>
-                    <select class="form-select" name="lp" aria-label="">
-                        <option selected value="">Pilih</option>
-                        <option value="L">Laki-Laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                    <input type="hidden" name="member_add" value="a">
-                    `;
-        }
-        $('#input-lp').html(html);
-        $('#add-anggota').modal('show');
+    function getToken() {
+        return $('meta[name="csrf-token"]').attr('content');
     }
+
+    function baru(requestFrom, familyID) {
+        var url = "<?= site_url('member/modal/'); ?>";
+        var input = `
+            <input type="hidden" name="csrf_test_name" value="` + getToken() + `">
+            <input type="hidden" name="request_from" value="` + requestFrom + `"></input>
+            <input type="hidden" name="id_family" value="` + familyID + `"></input>`;
+        $(function() {
+            $('<form action="' + url + '" method="post">' + input + '</form>').appendTo('body').submit().remove();
+        });
+    }
+
+
+    // var html = '';
+    // if (p == 's') {
+    //     html = `
+    //             <label for="" class="form-label">Jenis Kelamin</label>
+    //             <select readonly class="form-select" name="lp" aria-label="">
+    //                 <option selected value="L">Laki-Laki</option>
+    //             </select>
+    //             <input type="hidden" name="member_add" value="s">
+    //             `;
+    // } else if (p == 'i') {
+    //     html = `
+    //             <label for="" class="form-label">Jenis Kelamin</label>
+    //             <select readonly class="form-select" name="lp" aria-label="">
+    //                 <option selected value="P">Perempuan</option>
+    //             </select>
+    //             <input type="hidden" name="member_add" value="i">
+    //             `;
+    // } else if (p == 'a') {
+    //     html = `
+    //             <label for="" class="form-label">Jenis Kelamin</label>
+    //             <select class="form-select" name="lp" aria-label="">
+    //                 <option selected value="">Pilih</option>
+    //                 <option value="L">Laki-Laki</option>
+    //                 <option value="P">Perempuan</option>
+    //             </select>
+    //             <input type="hidden" name="member_add" value="a">
+    //             `;
+    // }
+    // $('#input-lp').html(html);
+    // $('#add-anggota').modal('show');
+    // }
 
     function cari(p) {
         let pasangan = '';

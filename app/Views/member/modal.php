@@ -1,3 +1,12 @@
+<?= $this->extend('layout/template') ?>
+<?= $this->section('content') ?>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#add-anggota').modal('show');
+    });
+</script>
+
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <?= form_open('member/save', ['id' => 'save-member']); ?>
     <div class="modal-dialog">
@@ -56,3 +65,7 @@
     </div>
     <?= form_close(); ?>
 </div>
+<script>
+
+</script>
+<?= $this->endSection() ?>

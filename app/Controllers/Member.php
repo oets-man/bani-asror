@@ -38,14 +38,16 @@ class Member extends BaseController
 
     public function save($id = null)
     {
-        if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
+        // dd($this->request->getPost());
+
+        // if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
         $data = array_filter($this->request->getPost());
 
         //get from suami, istri ,anak
-        $member_add = isset($data['member_add']) ? $data['member_add'] : null;
-        if (isset($data['member_add'])) {
-            unset($data['member_add']);
-        }
+        // $member_add = isset($data['member_add']) ? $data['member_add'] : null;
+        // if (isset($data['member_add'])) {
+        //     unset($data['member_add']);
+        // }
 
         if (!$id) {
             //insert
@@ -62,7 +64,6 @@ class Member extends BaseController
                 'nama' => $member['nama'],
                 'lp' => $member['lp'],
                 'avatar' => $avatar,
-                'member_add' => $member_add,
             ];
             $errors = null;
             $message = 'Data baru berhasil ditambahkan.';
@@ -78,6 +79,9 @@ class Member extends BaseController
 
     public function modal($id = null)
     {
-        return view('member/modal');
+        if (!$id) {
+            $data = ['data' => $this->request->getPost()];
+            return view('member/modal', $data);
+        }
     }
 }
