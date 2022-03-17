@@ -18,12 +18,16 @@ class Member extends BaseController
 
     public function index($id = null)
     {
-        // dd(site_url());
+        // redirect ke id user
         $id = isset($id) ? $id : 0;
 
         //set session
         session()->set(['lastMemberID' => $id]);
         $member = $this->member->membersDetail($id);
+
+        //perlu message not found
+        if (!$member) return redirect()->back();
+
         if ($member->lp == 'L') {
             $member->avatar = $member->avatar ?: 'male.svg';
         } elseif ($member->lp == 'P') {
@@ -42,16 +46,10 @@ class Member extends BaseController
 
     public function save()
     {
-        $response = [
-            'success' => null,
-            'errors' => null,
-            'message' => null,
-        ];
-
         // dd($this->request->getPost());
 
         if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
-        $data = array_filter($this->request->getPost());
+        $data = $this->request->getPost();
 
         //get from suami, istri, anak
         if (isset($data['member_add'])) {
@@ -64,7 +62,12 @@ class Member extends BaseController
             $id_family = $data['id_family'];
             unset($data['id_family']);
         }
-        $isNew = isset($data['id']) ? false : true;
+
+        $data['wafat_muda'] = isset($data['wafat_muda']) ? 'Y' : 'N';
+        $data['tgl_lahir'] = strlen($data['tgl_lahir']) !== 0 ? $data['tgl_lahir'] :  NULL;
+        $data['tgl_wafat'] = strlen($data['tgl_wafat']) !== 0 ? $data['tgl_wafat'] :  NULL;
+
+        $isNew = is_numeric($data['id']) ? false : true;
         if ($isNew) {
             //insert member
             $this->member->insert($data);
@@ -75,14 +78,18 @@ class Member extends BaseController
                     'id_member' => $newID,
                     'id_family' => $id_family
                 ];
-                $save = $this->child->save($insertChild);
+
+                $save = $this->child->insert($insertChild);
                 if ($save) {
                     $message = 'Anak berhasil ditambahkan.';
                 }
+            } elseif ($member_add == 's') {
+                # code... 
+            } elseif ($member_add == 'i') {
+                # code...
             }
             $response = [
                 'success' => true,
-                'message' => $message,
             ];
         } else {
             //update member
@@ -116,5 +123,17 @@ class Member extends BaseController
             $response['data'] = $data;
         }
         echo json_encode($response);
+    }
+
+    public function delete()
+    {
+        if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
+        $id = $this->request->getPost('id');
+        try {
+            $this->member->delete($id);
+        } catch (\Throwable $th) {
+            $th->getMessage();
+        }
+        return json_encode(true);
     }
 }

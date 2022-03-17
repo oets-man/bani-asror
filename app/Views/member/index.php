@@ -12,7 +12,10 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data
-                        <span class="float-end"><i class="bi bi-three-dots"></i></span>
+                        <span class="float-end">
+                            <button class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $data->id; ?>')">
+                                <i class="bi bi-pencil-square"></i>
+                            </button></span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -44,6 +47,26 @@
                                             <td>Ibu</td>
                                             <td><?= $data->ibu ? anchor(site_url('member/index/') . $data->id_ibu, $data->ibu) : '-'; ?></td>
                                         </tr>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td><?= $data->alamat ?: '-'; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tanggal Lahir</td>
+                                            <td><?= $data->tgl_lahir ?: '-'; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tanggal Wafat</td>
+                                            <td><?= $data->tgl_wafat ?: '-'; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usia Wafat</td>
+                                            <td><?= $data->usia_wafat ?: '-'; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wafat Muda</td>
+                                            <td><?= $data->wafat_muda == 'Y' ? 'Ya' : '-'; ?></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -59,7 +82,11 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
-                        <span class="float-end"><button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $data->id ?>', '<?= $data->lp; ?>')"><i class="bi bi-plus-square-fill"></i></button></span>
+                        <span class="float-end">
+                            <button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $data->id ?>', '<?= $data->lp; ?>')">
+                                <i class="bi bi-plus-square-fill"></i>
+                            </button>
+                        </span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -73,18 +100,20 @@
                                     <td class="text-end"><i class="bi bi-info-circle-fill"></i></td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($keluarga as $k) : ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('member/index/') . $k->id_pasangan; ?>"><?= $k->pasangan ?: '-'; ?></a></td>
-                                        <td><?= $k->children_count ?: '-'; ?></td>
-                                        <td class="text-end"><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+                            <?php if (count($keluarga) > 0) : ?>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($keluarga as $k) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $k->id_pasangan ? anchor(site_url('member/index/') . $k->id_pasangan, $k->pasangan) : '-' ?></td>
+                                            <td><?= $k->children_count ?: '-'; ?></td>
+                                            <td class="text-end"><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            <?php endif; ?>
                         </table>
                     </div>
                 </div>
@@ -108,16 +137,18 @@
                                     <td>Anak</td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($anak as $a) : ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><a href="<?= site_url('member/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+                            <?php if (count($anak) > 0) : ?>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($anak as $a) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><a href="<?= site_url('member/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            <?php endif; ?>
                         </table>
                     </div>
                 </div>
@@ -125,6 +156,10 @@
         </div>
     </div>
 </div>
+
+<!-- modal -->
+<?= view('member/modal'); ?>
+
 
 <script>
     function newFamily(id, lp) {
@@ -146,7 +181,7 @@
                 });
                 $.ajax({
                     type: "post",
-                    url: "family/new",
+                    url: "<?= site_url('family/new'); ?>",
                     data: {
                         id: id,
                         lp: lp
@@ -154,6 +189,10 @@
                     dataType: "json",
                     success: function(response) {
                         console.log(response);
+                        if (!response.errors) {
+                            Swal.fire('Sukses', response.message, 'success')
+                            location.href = "<?= site_url('family/index/'); ?>" + response.id_family
+                        }
                     }
                 });
             }

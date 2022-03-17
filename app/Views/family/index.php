@@ -35,7 +35,7 @@
                                     <div class="py-2">
                                         <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('s')">Baru</button>
                                         <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('s')">Cari</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('s')">Hapus</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('s')">Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                     <div class="py-2">
                                         <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('i')">Baru</button>
                                         <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('i')">Cari</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapus('i')">Hapus</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('i')">Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +160,13 @@
             <?= form_open('child/save'); ?>
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Anak</h5>
+                    <h5 class="my-0">Data Anak
+                        <span class="float-end">
+                            <button class="btn btn-sm btn-outline-primary" onclick="">
+                                <i class="bi bi-sort-numeric-down"></i>
+                            </button>
+                        </span>
+                    </h5>
                 </div>
                 <div class="card-body py-4 px-4">
                     <div class="table-responsive">
@@ -172,20 +178,22 @@
                                     <td class="text-end">Aksi</td>
                                 </tr>
                             </thead>
-                            <tbody id="input-child">
-                                <?php
-                                $no = 1;
-                                foreach ($child as $c) : ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= anchor(site_url('member/index/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
-                                        <td class="text-end">
-                                            <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
-                                            <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+                            <?php if (count($child) > 0) : ?>
+                                <tbody id="input-child">
+                                    <?php
+                                    $no = 1;
+                                    foreach ($child as $c) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= anchor(site_url('member/index/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
+                                            <td class="text-end">
+                                                <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
+                                                <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            <?php endif; ?>
                         </table>
                     </div>
 
@@ -207,8 +215,7 @@
 
 
 <!-- modal -->
-<?php echo view('member/modal');
-?>
+<?= view('member/modal'); ?>
 
 <?= $this->endSection() ?>
 
@@ -218,42 +225,15 @@
 
 <?= view('js/ajaxAlamat'); ?>
 <script>
-    $(document).ready(function() {
-        $('#save-member').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function(response) {
-                    console.log(response);
-                    $('#add-anggota').modal('hide');
-                    if (response.errors) {
-                        alert('error');
-                    }
-                    location.reload();
-                    // newToken(response.csrf_token);
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-                }
-            });
-        });
-    });
-
-    function newToken(token) {
-        $('meta[name="csrf-token"]').remove();
-        $('head').append('<meta name="csrf-token" content=' + token + '>');
-        $('input[name="csrf_test_name"]').val(token);
-    }
-
-    function getToken() {
-        return $('meta[name="csrf-token"]').attr('content');
-    }
-
     function baru(p) {
         var html = '';
+        //kosongkan input
+        $('#add-anggota :input').val('');
+        $('#add-anggota input[name=csrf_test_name]').val('<?= csrf_hash(); ?>');
+
+        // masih ADA masalah pada CHECKBOX
+        // $("#add-anggota input[name=wafat_muda]").prop("checked", false);  
+
         if (p == 's') {
             html = `
                 <label for="" class="form-label">Jenis Kelamin</label>
@@ -314,7 +294,7 @@
         });
     }
 
-    function hapus(p) {
+    function hapusPasangan(p) {
         if (p == 's') {
             $('#suami').html(null);
             $('#id_suami').attr('value', null);
@@ -333,16 +313,20 @@
 
     function deleteFamily(id) {
         Swal.fire({
+            title: 'Hapus Keluarga',
+            text: "Aksi ini tidak dapat dibatalkan.",
             icon: 'warning',
-            title: 'Yakin menghapus keluarga ini?',
+            footer: 'Data anak yang terhubung dengan id ini juga akan terhapus',
             showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Gagal',
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = "<?= site_url('family/delete/'); ?>" + id;
             }
-        })
+        });
     }
 
     function deleteChild(id) {
@@ -386,45 +370,6 @@
                         alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError)
                     }
                 });
-            }
-        });
-    }
-
-    function editMember(id) {
-        // alert(id + '~ belum selesai');
-        var url = "<?= site_url('member/find/') ?>" + id;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: "post",
-            url: url,
-            data: {
-                id: id
-            },
-            dataType: "json",
-            success: function(response) {
-                if (response.errors) {
-                    alert(response.errors);
-                } else {
-                    $("#add-anggota input[name=id]").val(response.data.id);
-                    $("#add-anggota input[name=nama]").val(response.data.nama);
-                    $("#add-anggota input[name=nama_arab]").val(response.data.nama_arab);
-                    $("#add-anggota input[name=alias]").val(response.data.alias);
-                    $("#add-anggota input[name=tgl_lahir]").val(response.data.tgl_lahir);
-                    $("#add-anggota select[name=lp] option").removeAttr('selected').filter('[value=' + response.data.lp + ']').attr('selected', true);
-                    $("#add-anggota input[name=tgl_wafat]").val(response.data.tgl_wafat);
-
-                    // $("#add-anggota input[name=avatar]").val(response.data.avatar);
-                    $('#add-anggota').modal('show');
-                }
-                // console.log(response);
-                newToken(response.csrf_token);
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
             }
         });
     }

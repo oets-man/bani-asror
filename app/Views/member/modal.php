@@ -27,6 +27,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="" class="form-label">Alamat</label>
+                    <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat singkat (1 atau 2 kata)">
+                </div>
+
+                <div class="mb-3">
                     <label for="" class="form-label">Tanggal Lahir</label>
                     <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir">
                 </div>
@@ -34,6 +39,12 @@
                     <label for="" class="form-label">Tanggal Wafat</label>
                     <input type="date" class="form-control" name="tgl_wafat" id="tgl_wafat">
                 </div>
+
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" type="checkbox" id="wafat_muda" value="true" name="wafat_muda">
+                    <label class="form-check-label" for="wafat_muda">Wafat Muda / Tidak Menikah</label>
+                </div>
+
                 <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
                     <select class="form-select" name="lp" aria-label="" id="lp">
@@ -48,11 +59,144 @@
                     <small>Belum siap</small>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-success">Simpan</button>
+            <div class="card-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteMember()">Hapus</button>
+                <div class="float-end">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
             </div>
         </div>
     </div>
     <?= form_close(); ?>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#save-member').submit(function(e) {
+            e.preventDefault();
+            // return console.log($(this).serialize());
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    // return console.log(response);
+                    $('#add-anggota').modal('hide');
+                    if (response.errors) {
+                        alert('error');
+                    }
+                    location.reload();
+                    // newToken(response.csrf_token);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+        });
+    });
+
+    function newToken(token) {
+        $('meta[name="csrf-token"]').remove();
+        $('head').append('<meta name="csrf-token" content=' + token + '>');
+        $('input[name="csrf_test_name"]').val(token);
+    }
+
+    function deleteMember() {
+        var id = $("#add-anggota input[name=id]").val();
+        Swal.fire({
+            title: 'Hapus Anggota',
+            text: "Aksi ini tidak dapat dibatalkan.",
+            icon: 'warning',
+            footer: 'Data keluarga yang terhubung dengan id ini juga akan terpengaruh',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Gagal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "<?= site_url('member/delete'); ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response == true) {
+                            window.location.href = "<?= site_url('member/index') ?>";
+                        } else {
+                            Swal.fire(
+                                'Opps..',
+                                'Data gagal dihapus.',
+                                'warning'
+                            );
+                        }
+                    },
+                    error: function(xhr, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError)
+                    }
+                });
+            }
+        });
+    }
+
+    function editMember(id) {
+        var url = "<?= site_url('member/find/') ?>" + id;
+        // return alert(url);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {
+                id: id
+            },
+            dataType: "json",
+            success: function(response) {
+                // console.log(response);
+                if (response.errors) {
+                    alert(response.errors);
+                } else {
+                    $("#add-anggota input[name=id]").val(response.data.id);
+                    $("#add-anggota input[name=nama]").val(response.data.nama);
+                    $("#add-anggota input[name=nama_arab]").val(response.data.nama_arab);
+                    $("#add-anggota input[name=alias]").val(response.data.alias);
+                    $("#add-anggota input[name=alamat]").val(response.data.alamat);
+                    $("#add-anggota input[name=tgl_lahir]").val(response.data.tgl_lahir);
+                    $("#add-anggota select[name=lp] option").removeAttr('selected').filter('[value=' + response.data.lp + ']').attr('selected', true);
+                    $("#add-anggota input[name=tgl_wafat]").val(response.data.tgl_wafat);
+
+                    if (response.data.wafat_muda == 'Y') {
+                        $("#add-anggota input[name=wafat_muda]").prop("checked", true);
+                    } else {
+                        $("#add-anggota input[name=wafat_muda]").prop("checked", false);
+                    }
+
+                    // $("#add-anggota input[name=avatar]").val(response.data.avatar);
+                    $('#add-anggota').modal('show');
+                }
+                // console.log(response);
+                newToken(response.csrf_token);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    }
+</script>

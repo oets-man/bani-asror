@@ -18,59 +18,30 @@ class Family extends BaseController
         $this->child = new ChildModel();
     }
 
-    public function index($id = null, $p = null)
+    public function index($id = null)
     {
 
         if (is_null($id)) return exit('ID not found');
         session()->set(['lastFamilyID' => $id]);
 
-        if (is_null($p)) {
-            //not new
-            $family = $this->family->familiesDetail($id);
-            if (!$family) return "Not found family $id";
+        $family = $this->family->familiesDetail($id);
+        if (!$family) return "Not found family $id";
 
-            $family->avatar_suami = $family->avatar_suami ?: 'male.svg';
-            $family->avatar_istri = $family->avatar_istri ?: 'female.svg';
+        $family->avatar_suami = $family->avatar_suami ?: 'male.svg';
+        $family->avatar_istri = $family->avatar_istri ?: 'female.svg';
+        // dd($family);
 
-            $provinsi   = $this->alamat->getProvinsi()->getResult();
-            $kabupaten  = $this->alamat->getKabupaten($family->id_prov)->getResult();
-            $kecamatan  = $this->alamat->getKecamatan($family->id_kab)->getResult();
-            $desa       = $this->alamat->getDesa($family->id_kec)->getResult();
-            $child      = $this->child->childrenFamily($id);
-
-            // dd($family);
-
-            $data = [
-                'title'         => 'Keluarga',
-                'header'        => 'Data Keluarga',
-                'family'        => $family,
-                'provinsi'      => $provinsi,
-                'kabupaten'     => $kabupaten,
-                'kecamatan'     => $kecamatan,
-                'desa'          => $desa,
-                'child'         => $child,
-            ];
-            // dd($data);
-            return view('family/index', $data);
-        } else {
-            $member = new MemberModel();
-            $member = $member->membersDetail($id);
-            if (!$member) return "Not found member $id";
-            // create new family
-            if ($p == 's') {
-                $data = ['id_suami' => $id];
-                $this->family->insert($data);
-                $insID = $this->family->getInsertID();
-                return redirect()->to(site_url('family/index/') . $insID);
-            } elseif ($p == 'i') {
-                $data = ['id_istri' => $id];
-                $this->family->insert($data);
-                $insID = $this->family->getInsertID();
-                return redirect()->to(site_url('family/index/') . $insID);
-            } else {
-                return "Parameter tidak sesuai";
-            }
-        }
+        $data = [
+            'title'         => 'Keluarga',
+            'header'        => 'Data Keluarga',
+            'family'        => $family,
+            'provinsi'      => $this->alamat->getProvinsi()->getResult(),
+            'kabupaten'     => $this->alamat->getKabupaten($family->id_prov)->getResult(),
+            'kecamatan'     => $this->alamat->getKecamatan($family->id_kab)->getResult(),
+            'desa'          => $this->alamat->getDesa($family->id_kec)->getResult(),
+            'child'         => $this->child->childrenFamily($id),
+        ];
+        return view('family/index', $data);
     }
 
     public function update($id)
@@ -103,7 +74,24 @@ class Family extends BaseController
 
     public function new()
     {
+        //terima ajax dari halaman member
         if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
-        echo json_encode($this->request->getPost());
+        $id = $this->request->getPost('id');
+        $lp = strtolower($this->request->getPost('lp'));
+        if ($lp == 'l') {
+            //buat suami
+            $this->family->insert(['id_suami' => $id]);
+            $id_family = $this->family->getInsertID();
+        } elseif ($lp == 'p') {
+            //buat istri
+            $this->family->insert(['id_istri' => $id]);
+            $id_family = $this->family->getInsertID();
+        }
+        $response = [
+            'errors' => null,
+            'message' => 'Keluarga baru berhasil dibuat',
+            'id_family' => $id_family
+        ];
+        return json_encode($response);
     }
 }
