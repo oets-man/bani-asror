@@ -1,18 +1,9 @@
-<?= $this->extend('layout/template') ?>
-<?= $this->section('content') ?>
-
-<script type="text/javascript">
-    $(window).on('load', function() {
-        $('#add-anggota').modal('show');
-    });
-</script>
-
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <?= form_open('member/save', ['id' => 'save-member']); ?>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Tambah Anggota</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Anggota</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -46,7 +37,7 @@
                 <div class="mb-3" id="input-lp">
                     <label for="" class="form-label">Jenis Kelamin</label>
                     <select class="form-select" name="lp" aria-label="" id="lp">
-                        <option selected value="">Pilih</option>
+                        <option selected="selected" value="">Pilih</option>
                         <option value="L">Laki-Laki</option>
                         <option value="P">Perempuan</option>
                     </select>
@@ -65,7 +56,3 @@
     </div>
     <?= form_close(); ?>
 </div>
-<script>
-
-</script>
-<?= $this->endSection() ?>

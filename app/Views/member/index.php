@@ -59,8 +59,7 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
-                        <?php $p = strtolower($data->lp) == 'l' ? 's' : 'i'; ?>
-                        <span class="float-end"><a href="<?= site_url('family/index/') . $data->id  . '/' .  $p; ?>"><i class="bi bi-plus-square-fill"></i></a></span>
+                        <span class="float-end"><button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $data->id ?>', '<?= $data->lp; ?>')"><i class="bi bi-plus-square-fill"></i></button></span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -97,7 +96,7 @@
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Anak
-                        <span class="float-end"><i class="bi bi-plus-square-fill"></i></span>
+                        <!-- <span class="float-end"><i class="bi bi-plus-square-fill"></i></span> -->
                     </h5>
                 </div>
                 <div class="card-body">
@@ -126,4 +125,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    function newFamily(id, lp) {
+        Swal.fire({
+            title: 'Keluarga Baru',
+            text: 'Ingin buat keluarga baru?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "family/new",
+                    data: {
+                        id: id,
+                        lp: lp
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+            }
+        })
+    }
+</script>
+
 <?= $this->endSection() ?>

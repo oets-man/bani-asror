@@ -13,7 +13,7 @@ class Family extends BaseController
 {
     public function __construct()
     {
-        $this->model = new FamilyModel();
+        $this->family = new FamilyModel();
         $this->alamat = new AlamatModel;
         $this->child = new ChildModel();
     }
@@ -26,7 +26,7 @@ class Family extends BaseController
 
         if (is_null($p)) {
             //not new
-            $family   = $this->model->familiesDetail($id);
+            $family = $this->family->familiesDetail($id);
             if (!$family) return "Not found family $id";
 
             $family->avatar_suami = $family->avatar_suami ?: 'male.svg';
@@ -39,59 +39,41 @@ class Family extends BaseController
             $child      = $this->child->childrenFamily($id);
 
             // dd($family);
+
+            $data = [
+                'title'         => 'Keluarga',
+                'header'        => 'Data Keluarga',
+                'family'        => $family,
+                'provinsi'      => $provinsi,
+                'kabupaten'     => $kabupaten,
+                'kecamatan'     => $kecamatan,
+                'desa'          => $desa,
+                'child'         => $child,
+            ];
+            // dd($data);
+            return view('family/index', $data);
         } else {
-            // is new
             $member = new MemberModel();
             $member = $member->membersDetail($id);
             if (!$member) return "Not found member $id";
-            $family   = [
-                'id' => null,
-                'id_suami' => null,
-                'id_istri' => null,
-                'suami' => null,
-                'istri' => null,
-                'avatar_suami' => 'male.svg',
-                'avatar_istri' => 'female.svg',
-                'tgl_nikah' => null,
-                'cerai' => null,
-                'id_prov' => null,
-                'id_kab' => null,
-                'id_kec' => null,
-                'desa' => null,
-                'jl' => null,
-            ];
+            // create new family
             if ($p == 's') {
-                $family['id_suami'] = $member->id;
-                $family['suami'] = $member->nama;
+                $data = ['id_suami' => $id];
+                $this->family->insert($data);
+                $insID = $this->family->getInsertID();
+                return redirect()->to(site_url('family/index/') . $insID);
             } elseif ($p == 'i') {
-                $family['id_istri'] = $member->id;
-                $family['istri'] = $member->nama;
+                $data = ['id_istri' => $id];
+                $this->family->insert($data);
+                $insID = $this->family->getInsertID();
+                return redirect()->to(site_url('family/index/') . $insID);
             } else {
                 return "Parameter tidak sesuai";
             }
-            $family = (object) $family;
-            $provinsi   = $this->alamat->getProvinsi()->getResult();
-            $kabupaten  = [];
-            $kecamatan  = [];
-            $desa       = [];
-            $child      = [];
         }
-
-        $data = [
-            'title'         => 'Keluarga',
-            'header'        => 'Data Keluarga',
-            'data'          => $family,
-            'provinsi'      => $provinsi,
-            'kabupaten'     => $kabupaten,
-            'kecamatan'     => $kecamatan,
-            'desa'          => $desa,
-            'isNew'         => $p ? true : false,
-            'child'         => $child,
-        ];
-        // dd($data);
-        return view('family/index', $data);
     }
-    public function save($id = null)
+
+    public function update($id)
     {
         // dd($id);
         $data = $this->request->getPost();
@@ -103,25 +85,25 @@ class Family extends BaseController
         $data['id_kab'] = strlen($data['id_kab']) !== 0 ? strval($data['id_kab']) :  NULL;
         $data['id_kec'] = strlen($data['id_kec']) !== 0 ? strval($data['id_kec']) :  NULL;
 
-        if ($id) {
-            // dd($data);
-            $this->model->update($id, $data);
-        } else {
-            $this->model->insert($data);
-            $id = $this->model->getInsertID();
-        }
+        $this->family->update($id, $data);
         return redirect()->to(site_url('family/index/') . $id);
     }
 
     public function delete($id)
     {
         try {
-            $this->model->delete($id);
+            $this->family->delete($id);
         } catch (\Throwable $th) {
             $th->getMessage();
             return redirect()->back();
         }
         $lastMemberID = session()->lastMemberID;
         return redirect()->to(site_url('member/index/') . $lastMemberID);
+    }
+
+    public function new()
+    {
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
+        echo json_encode($this->request->getPost());
     }
 }

@@ -144,6 +144,8 @@
     <script src="<?= base_url(); ?>/assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="<?= base_url(); ?>/assets/js/mazer.js"></script>
+    <script src="<?= base_url(); ?>/assets/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+
     <?= $this->renderSection('script') ?>
 </body>
 
