@@ -78,18 +78,26 @@ class Member extends BaseController
                     'id_member' => $newID,
                     'id_family' => $id_family
                 ];
-
-                $save = $this->child->insert($insertChild);
+                $save = $this->child->save($insertChild);
                 if ($save) {
                     $message = 'Anak berhasil ditambahkan.';
                 }
             } elseif ($member_add == 's') {
-                # code... 
+                $ins = ['id' => $id_family, 'id_suami' => $newID];
+                $save = $this->family->save($ins);
+                if ($save) {
+                    $message = 'Suami berhasil ditambahkan.';
+                }
             } elseif ($member_add == 'i') {
-                # code...
+                $ins = ['id' => $id_family, 'id_istri' => $newID];
+                $save = $this->family->save($ins);
+                if ($save) {
+                    $message = 'Istri berhasil ditambahkan.';
+                }
             }
             $response = [
                 'success' => true,
+                'message' => $message
             ];
         } else {
             //update member

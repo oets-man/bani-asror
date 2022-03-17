@@ -89,11 +89,16 @@
                 success: function(response) {
                     // return console.log(response);
                     $('#add-anggota').modal('hide');
-                    if (response.errors) {
-                        alert('error');
+                    if (response.success == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            location.reload();
+                        });
                     }
-                    location.reload();
-                    // newToken(response.csrf_token);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
