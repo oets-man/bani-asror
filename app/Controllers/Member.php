@@ -102,13 +102,6 @@ class Member extends BaseController
         echo json_encode($response);
     }
 
-    public function modal($id = null) //gagal
-    {
-        if (!$id) {
-            $data = ['data' => $this->request->getPost()];
-            return view('member/modal', $data);
-        }
-    }
     public function find($id)
     {
         $response = [
