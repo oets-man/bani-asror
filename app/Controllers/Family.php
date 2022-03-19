@@ -57,7 +57,7 @@ class Family extends BaseController
         $data['id_kec'] = strlen($data['id_kec']) !== 0 ? strval($data['id_kec']) :  NULL;
 
         $this->family->update($id, $data);
-        return redirect()->to(site_url('family/index/') . $id);
+        return redirect()->to(site_url('family/') . $id);
     }
 
     public function delete($id)

@@ -1,5 +1,9 @@
 <?= $this->extend('layout/template') ?>
 
+<?= $this->section('header') ?>
+<!-- header -->
+<?= $this->endSection(); ?>
+
 <?= $this->section('content') ?>
 <div class="card-header h5 bg-light-success text-success py-3">
     <?= $header; ?>
@@ -30,7 +34,7 @@
                                     <h6>Suami</h6>
                                     <input type="hidden" name="id_suami" id="id_suami" value="<?= $family->id_suami !== null ? $family->id_suami : NULL; ?>">
                                     <h5 id="suami">
-                                        <?= $family->id_suami !== null ? anchor(site_url('member/index/') . $family->id_suami, $family->suami) : '-'; ?>
+                                        <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
                                         <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('s')">Baru</button>
@@ -51,7 +55,7 @@
                                     <h6>Istri</h6>
                                     <input type="hidden" name="id_istri" id="id_istri" value="<?= $family->id_istri !== null ? $family->id_istri : NULL; ?>">
                                     <h5 id="istri">
-                                        <?= $family->id_istri !== null ? anchor(site_url('member/index/') . $family->id_istri, $family->istri) : '-'; ?>
+                                        <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
                                         <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('i')">Baru</button>
@@ -126,7 +130,7 @@
                         <div class="col-xl-6 col-sm-12">
                             <div class="input-group mb-3">
                                 <select name="desa" id="desa" class="form-select" value="<?= $family->desa; ?>">
-                                    <option value="">Pilih Desa</option>
+                                    <option value="">Pilih Desa/ Kelurahan</option>
                                     <?php foreach ($desa as $al) : ?>
                                         <option <?= $al->desa == $family->desa ? "selected='selected'" : null; ?> value="<?= $al->desa; ?>"><?= $al->desa; ?></option>
                                     <?php endforeach; ?>
@@ -185,7 +189,7 @@
                                     foreach ($child as $c) : ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= anchor(site_url('member/index/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
+                                            <td><?= anchor(site_url('member/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
                                             <td class="text-end">
                                                 <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
                                                 <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a>
@@ -213,18 +217,16 @@
     </div>
 </div>
 
-
 <!-- modal -->
 <?= view('member/modal'); ?>
 
 <?= $this->endSection() ?>
 
-<!-- footer script -->
-<?= $this->section('script') ?>
-
-
-<?= view('js/ajaxAlamat'); ?>
+<!-- footer -->
+<?= $this->section('footer') ?>
 <script>
+    <?= view('js/ajaxAlamat.js'); ?>
+
     function baru(p) {
         var html = '';
         //kosongkan input

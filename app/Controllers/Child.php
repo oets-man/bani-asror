@@ -43,6 +43,6 @@ class Child extends BaseController
                 // }
             }
         }
-        return redirect()->to(site_url('family/index/') . $data['id_family'][0]);
+        return redirect()->to(site_url('family/') . $data['id_family'][0]);
     }
 }

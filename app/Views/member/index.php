@@ -1,5 +1,9 @@
 <?= $this->extend('layout/template') ?>
 
+<?= $this->section('header') ?>
+<!-- header -->
+<?= $this->endSection(); ?>
+
 <?= $this->section('content') ?>
 <div class="card-header h5 bg-light-success text-success py-3">
     <?= $title; ?>
@@ -41,11 +45,11 @@
                                         </tr>
                                         <tr>
                                             <td>Ayah</td>
-                                            <td><?= $data->ayah ? anchor(site_url('member/index/') . $data->id_ayah, $data->ayah) : '-'; ?></td>
+                                            <td><?= $data->ayah ? anchor(site_url('member/') . $data->id_ayah, $data->ayah) : '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Ibu</td>
-                                            <td><?= $data->ibu ? anchor(site_url('member/index/') . $data->id_ibu, $data->ibu) : '-'; ?></td>
+                                            <td><?= $data->ibu ? anchor(site_url('member/') . $data->id_ibu, $data->ibu) : '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Alamat</td>
@@ -107,9 +111,9 @@
                                     foreach ($keluarga as $k) : ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $k->id_pasangan ? anchor(site_url('member/index/') . $k->id_pasangan, $k->pasangan) : '-' ?></td>
+                                            <td><?= $k->id_pasangan ? anchor(site_url('member/') . $k->id_pasangan, $k->pasangan) : '-' ?></td>
                                             <td><?= $k->children_count ?: '-'; ?></td>
-                                            <td class="text-end"><?= anchor(site_url('family/index/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
+                                            <td class="text-end"><?= anchor(site_url('family/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -144,7 +148,7 @@
                                     foreach ($anak as $a) : ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><a href="<?= site_url('member/index/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
+                                            <td><a href="<?= site_url('member/') . $a->id_anak; ?>"><?= $a->anak ?: '-'; ?></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -161,6 +165,10 @@
 <?= view('member/modal'); ?>
 
 
+<?= $this->endSection() ?>
+
+<!-- footer -->
+<?= $this->section('footer'); ?>
 <script>
     function newFamily(id, lp) {
         Swal.fire({
@@ -191,7 +199,7 @@
                         console.log(response);
                         if (!response.errors) {
                             Swal.fire('Sukses', response.message, 'success')
-                            location.href = "<?= site_url('family/index/'); ?>" + response.id_family
+                            location.href = "<?= site_url('family/'); ?>" + response.id_family
                         }
                     }
                 });

@@ -66,7 +66,8 @@ class Member extends BaseController
         $data['wafat_muda'] = isset($data['wafat_muda']) ? 'Y' : 'N';
         $data['tgl_lahir'] = strlen($data['tgl_lahir']) !== 0 ? $data['tgl_lahir'] :  NULL;
         $data['tgl_wafat'] = strlen($data['tgl_wafat']) !== 0 ? $data['tgl_wafat'] :  NULL;
-
+        // echo json_encode($data);
+        // exit;
         $isNew = is_numeric($data['id']) ? false : true;
         if ($isNew) {
             //insert member
@@ -103,7 +104,7 @@ class Member extends BaseController
             //update member
             $member = $this->member->find($data['id']);
             if ($member) {
-                $saveMember = $this->member->save($data);
+                $saveMember = $this->member->update($data['id'], $data);
                 if ($saveMember) {
                     $message = 'Data berhasil diupdate.';
                     $response = [
@@ -119,13 +120,13 @@ class Member extends BaseController
 
     public function find($id)
     {
+        if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
         $response = [
             'errors' => null,
             'message' => null,
             'data' => null,
             'csrf_token' => csrf_hash(),
         ];
-        if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
         $data = $this->member->find($id);
         if ($data) {
             $response['data'] = $data;

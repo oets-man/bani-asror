@@ -88,6 +88,7 @@
                 dataType: "json",
                 success: function(response) {
                     // return console.log(response);
+                    // exit;
                     $('#add-anggota').modal('hide');
                     if (response.success == true) {
                         Swal.fire({
@@ -141,7 +142,7 @@
                     dataType: "json",
                     success: function(response) {
                         if (response == true) {
-                            window.location.href = "<?= site_url('member/index') ?>";
+                            window.location.href = "<?= site_url('member/') ?>";
                         } else {
                             Swal.fire(
                                 'Opps..',

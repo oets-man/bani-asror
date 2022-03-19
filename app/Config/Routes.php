@@ -32,6 +32,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Member::index');
+$routes->add('member/(:num)', 'Member::index/$1');
+$routes->add('family/(:num)', 'Family::index/$1');
 
 /*
  * --------------------------------------------------------------------
