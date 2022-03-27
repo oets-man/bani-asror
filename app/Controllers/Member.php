@@ -136,13 +136,17 @@ class Member extends BaseController
 
     public function delete()
     {
-        if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
         $id = $this->request->getPost('id');
         try {
             $this->member->delete($id);
         } catch (\Throwable $th) {
             $th->getMessage();
+            return redirect()->back();
         }
-        return json_encode(true);
+        return json_encode([
+            'success' => true,
+            'message' => 'Anggota berhasil dihapus'
+        ]);
     }
 }

@@ -1,6 +1,6 @@
+<?= form_open('member/save', ['id' => 'save-member']); ?>
 <div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <?= form_open('member/save', ['id' => 'save-member']); ?>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Anggota</h5>
@@ -26,6 +26,15 @@
                     <input type="text" class="form-control" name="alias" id="alias" placeholder="Panggilan, julukan, nama lain, ...">
                 </div>
 
+                <div class="mb-3" id="input-lp">
+                    <label for="" class="form-label">Jenis Kelamin</label>
+                    <select class="form-select" name="lp" aria-label="" id="lp">
+                        <option selected="selected" value="">Pilih</option>
+                        <option value="L">Laki-Laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                </div>
+
                 <div class="mb-3">
                     <label for="" class="form-label">Alamat</label>
                     <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat singkat (1 atau 2 kata)">
@@ -45,19 +54,6 @@
                     <label class="form-check-label" for="wafat_muda">Wafat Muda / Tidak Menikah</label>
                 </div>
 
-                <div class="mb-3" id="input-lp">
-                    <label for="" class="form-label">Jenis Kelamin</label>
-                    <select class="form-select" name="lp" aria-label="" id="lp">
-                        <option selected="selected" value="">Pilih</option>
-                        <option value="L">Laki-Laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="avatar" class="form-label">Foto</label>
-                    <input disabled class="form-control" type="file" name="avatar" id="avatar">
-                    <small>Belum siap</small>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-danger" onclick="deleteMember()">Hapus</button>
@@ -68,8 +64,8 @@
             </div>
         </div>
     </div>
-    <?= form_close(); ?>
 </div>
+<?= form_close(); ?>
 
 <script>
     $(document).ready(function() {
@@ -116,47 +112,12 @@
 
     function deleteMember() {
         var id = $("#add-anggota input[name=id]").val();
-        Swal.fire({
-            title: 'Hapus Anggota',
-            text: "Aksi ini tidak dapat dibatalkan.",
-            icon: 'warning',
-            footer: 'Data keluarga yang terhubung dengan id ini juga akan terpengaruh',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Gagal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "post",
-                    url: "<?= site_url('member/delete'); ?>",
-                    data: {
-                        id: id,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        if (response == true) {
-                            window.location.href = "<?= site_url('member/') ?>";
-                        } else {
-                            Swal.fire(
-                                'Opps..',
-                                'Data gagal dihapus.',
-                                'warning'
-                            );
-                        }
-                    },
-                    error: function(xhr, thrownError) {
-                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError)
-                    }
-                });
-            }
-        });
+        let url1 = "<?= site_url('member/delete/'); ?>";
+        let url2 = window.location.pathname.includes('member') ? "<?= site_url('member/'); ?>" : null;
+        let title = 'Hapus Anggota?';
+        let body = null;
+        let footer = 'Data keluarga yang terhubung dengan id ini juga akan terpengaruh';
+        ajaxDelete(id, url1, url2, title, body, footer);
     }
 
     function editMember(id) {

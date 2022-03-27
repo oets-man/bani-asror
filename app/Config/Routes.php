@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Bani');
+$routes->setDefaultController('Member');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Member::index');
+$routes->add('member/', 'Member::index');
 $routes->add('member/(:num)', 'Member::index/$1');
 $routes->add('family/(:num)', 'Family::index/$1');
 

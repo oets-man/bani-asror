@@ -60,16 +60,22 @@ class Family extends BaseController
         return redirect()->to(site_url('family/') . $id);
     }
 
-    public function delete($id)
+    public function delete()
     {
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
+        $id = $this->request->getPost('id');
         try {
             $this->family->delete($id);
         } catch (\Throwable $th) {
             $th->getMessage();
             return redirect()->back();
         }
-        $lastMemberID = session()->lastMemberID;
-        return redirect()->to(site_url('member/index/') . $lastMemberID);
+        return json_encode([
+            'success' => true,
+            'message' => 'Keluarga berhasil dihapus'
+        ]);
+        // $lastMemberID = session()->lastMemberID;
+        // return redirect()->to(site_url('member/index/') . $lastMemberID);
     }
 
     public function new()

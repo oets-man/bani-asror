@@ -170,6 +170,8 @@
 <!-- footer -->
 <?= $this->section('footer'); ?>
 <script>
+    <?= view('js/ajaxDelete.js'); ?>
+
     function newFamily(id, lp) {
         Swal.fire({
             title: 'Keluarga Baru',
@@ -196,7 +198,7 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         if (!response.errors) {
                             Swal.fire('Sukses', response.message, 'success')
                             location.href = "<?= site_url('family/'); ?>" + response.id_family

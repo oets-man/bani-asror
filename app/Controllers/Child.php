@@ -17,12 +17,18 @@ class Child extends BaseController
     }
     public function delete()
     {
-        if ($this->request->isAJAX()) {
-            $id = $this->request->getPost('id');
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
+        $id = $this->request->getPost('id');
+        try {
             $this->model->delete($id);
-            return json_encode(true);
+        } catch (\Throwable $th) {
+            $th->getMessage();
+            return redirect()->back();
         }
-        return json_encode(false);
+        return json_encode([
+            'success' => true,
+            'message' => 'Anak berhasil dihapus'
+        ]);
     }
 
     function save($id = null)

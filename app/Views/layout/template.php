@@ -132,9 +132,9 @@
                     <div class="float-start">
                         <p><?= date('Y'); ?> &copy; oets</p>
                     </div>
-                    <div class="float-end">
+                    <!-- <div class="float-end">
                         <p>trakteer.com</p>
-                    </div>
+                    </div> -->
                 </div>
             </footer>
         </div>

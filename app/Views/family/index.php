@@ -226,6 +226,7 @@
 <?= $this->section('footer') ?>
 <script>
     <?= view('js/ajaxAlamat.js'); ?>
+    <?= view('js/ajaxDelete.js'); ?>
 
     function baru(p) {
         var html = '';
@@ -314,66 +315,22 @@
     }
 
     function deleteFamily(id) {
-        Swal.fire({
-            title: 'Hapus Keluarga',
-            text: "Aksi ini tidak dapat dibatalkan.",
-            icon: 'warning',
-            footer: 'Data anak yang terhubung dengan id ini juga akan terhapus',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Gagal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "<?= site_url('family/delete/'); ?>" + id;
-            }
-        });
+        let url1 = "<?= site_url('family/delete/'); ?>";
+        let url2 = "<?= site_url('member/') . session()->lastMemberID; ?>";
+        let title = 'Hapus Keluarga?';
+        let body = null;
+        let footer = 'Data anak yang terhubung dengan id ini juga akan terhapus';
+        ajaxDelete(id, url1, url2, title, body, footer);
     }
 
     function deleteChild(id) {
-        Swal.fire({
-            title: 'Kamu yakin?',
-            text: "Aksi ini tidak dapat dibatalkan.",
-            icon: 'warning',
-            footer: 'Aksi ini hanya menghapus data anak, bukan data anggota.',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Gagal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "post",
-                    url: "<?= site_url('child/delete'); ?>",
-                    data: {
-                        id: id,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        if (response == true) {
-                            location.reload();
-                            //reload masih bermasalah
-                        } else {
-                            Swal.fire(
-                                'Opps..',
-                                'Data gagal dihapus.',
-                                'warning'
-                            );
-                        }
-                    },
-                    error: function(xhr, thrownError) {
-                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError)
-                    }
-                });
-            }
-        });
+        let url1 = "<?= site_url('child/delete/'); ?>";
+        let url2 = null; //reload
+        let title = 'Hapus Anak?';
+        let body = null;
+        let footer = 'Aksi ini hanya menghapus data anak, bukan data anggota.';
+        ajaxDelete(id, url1, url2, title, body, footer);
+
     }
 </script>
 <?= $this->endSection(); ?>
