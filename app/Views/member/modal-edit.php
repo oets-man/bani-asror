@@ -1,5 +1,5 @@
 <?= form_open('member/save', ['id' => 'save-member']); ?>
-<div class="modal fade" id="add-anggota" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modal-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -72,12 +72,10 @@
         $('#save-member').submit(function(e) {
             e.preventDefault();
             // return console.log($(this).serialize());
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="X-CSRF-TOKEN"]').attr('content')
+                },
                 type: "post",
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
@@ -85,7 +83,7 @@
                 success: function(response) {
                     // return console.log(response);
                     // exit;
-                    $('#add-anggota').modal('hide');
+                    $('#modal-edit').modal('hide');
                     if (response.success == true) {
                         Swal.fire({
                             icon: 'success',
@@ -105,13 +103,13 @@
     });
 
     function newToken(token) {
-        $('meta[name="csrf-token"]').remove();
-        $('head').append('<meta name="csrf-token" content=' + token + '>');
+        $('meta[name="X-CSRF-TOKEN"]').remove();
+        $('head').append('<meta name="X-CSRF-TOKEN" content=' + token + '>');
         $('input[name="csrf_test_name"]').val(token);
     }
 
     function deleteMember() {
-        let id = $("#add-anggota input[name=id]").val();
+        let id = $("#modal-edit input[name=id]").val();
         let url1 = "<?= site_url('member/delete/'); ?>";
         let url2 = window.location.pathname.includes('member') ? "<?= site_url('member/'); ?>" : null;
         let title = 'Hapus Anggota?';
@@ -125,7 +123,7 @@
         // return alert(url);
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="X-CSRF-TOKEN"]').attr('content')
             }
         });
         $.ajax({
@@ -140,23 +138,23 @@
                 if (response.errors) {
                     alert(response.errors);
                 } else {
-                    $("#add-anggota input[name=id]").val(response.data.id);
-                    $("#add-anggota input[name=nama]").val(response.data.nama);
-                    $("#add-anggota input[name=nama_arab]").val(response.data.nama_arab);
-                    $("#add-anggota input[name=alias]").val(response.data.alias);
-                    $("#add-anggota input[name=alamat]").val(response.data.alamat);
-                    $("#add-anggota input[name=tgl_lahir]").val(response.data.tgl_lahir);
-                    $("#add-anggota select[name=lp] option").removeAttr('selected').filter('[value=' + response.data.lp + ']').attr('selected', true);
-                    $("#add-anggota input[name=tgl_wafat]").val(response.data.tgl_wafat);
+                    $("#modal-edit input[name=id]").val(response.data.id);
+                    $("#modal-edit input[name=nama]").val(response.data.nama);
+                    $("#modal-edit input[name=nama_arab]").val(response.data.nama_arab);
+                    $("#modal-edit input[name=alias]").val(response.data.alias);
+                    $("#modal-edit input[name=alamat]").val(response.data.alamat);
+                    $("#modal-edit input[name=tgl_lahir]").val(response.data.tgl_lahir);
+                    $("#modal-edit select[name=lp] option").removeAttr('selected').filter('[value=' + response.data.lp + ']').attr('selected', true);
+                    $("#modal-edit input[name=tgl_wafat]").val(response.data.tgl_wafat);
 
                     if (response.data.wafat_muda == 'Y') {
-                        $("#add-anggota input[name=wafat_muda]").prop("checked", true);
+                        $("#modal-edit input[name=wafat_muda]").prop("checked", true);
                     } else {
-                        $("#add-anggota input[name=wafat_muda]").prop("checked", false);
+                        $("#modal-edit input[name=wafat_muda]").prop("checked", false);
                     }
 
-                    // $("#add-anggota input[name=avatar]").val(response.data.avatar);
-                    $('#add-anggota').modal('show');
+                    // $("#modal-edit input[name=avatar]").val(response.data.avatar);
+                    $('#modal-edit').modal('show');
                 }
                 // console.log(response);
                 newToken(response.csrf_token);

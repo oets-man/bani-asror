@@ -9,7 +9,7 @@ class Child extends BaseController
 {
     public function __construct()
     {
-        $this->model = new ChildModel();
+        $this->child = new ChildModel();
     }
     public function index()
     {
@@ -20,7 +20,7 @@ class Child extends BaseController
         if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
         $id = $this->request->getPost('id');
         try {
-            $this->model->delete($id);
+            $this->child->delete($id);
         } catch (\Throwable $th) {
             $th->getMessage();
             return redirect()->back();
@@ -33,22 +33,18 @@ class Child extends BaseController
 
     function save($id = null)
     {
-        $data = $this->request->getPost();
-        // dd($data['id_family']);
-        if (!$data) return redirect()->back();
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
         if (!$id) {
-            //save
-            $countIns = 0;
-            for ($i = 0; $i < count($data['id_family']); $i++) {
-                $this->model->insert([
-                    'id_member' => $data['id_member'][$i],
-                    'id_family' => $data['id_family'][$i],
-                ]);
-                // if ($this->db->affectedRows() > 0) {
-                //     $countIns++;
-                // }
-            }
+            //insert
+            $data = [
+                'id_member' => $this->request->getPost('id_member'),
+                'id_family' => $this->request->getPost('id_family'),
+            ];
+            $this->child->insert($data);
+            return json_encode([
+                'success' => true,
+                'message' => 'Anak berhasil ditambahkan'
+            ]);
         }
-        return redirect()->to(site_url('family/') . $data['id_family'][0]);
     }
 }

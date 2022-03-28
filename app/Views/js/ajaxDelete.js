@@ -13,7 +13,7 @@ function ajaxDelete(id, url1, url2=null,textTitle=null, textBody=null,textFooter
         if (result.isConfirmed) {
             $.ajax({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="X-CSRF-TOKEN"]').attr('content')
                 },
                 type: "post",
                 url: url1,

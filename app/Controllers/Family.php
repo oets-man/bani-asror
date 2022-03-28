@@ -60,6 +60,24 @@ class Family extends BaseController
         return redirect()->to(site_url('family/') . $id);
     }
 
+    public function updatePasangan($req)
+    {
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
+        $id_member = $this->request->getPost('id_member');
+        $id_family = $this->request->getPost('id_family');
+
+        if ($req == 'suami') {
+            $this->family->update($id_family, ['id_suami' => $id_member]);
+        } else if ($req == 'istri') {
+            $this->family->update($id_family, ['id_istri' => $id_member]);
+        }
+        $req = ucfirst($req);
+        return json_encode([
+            'success' => true,
+            'message' => "$req berhasil diupdate"
+        ]);
+    }
+
     public function delete()
     {
         if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');

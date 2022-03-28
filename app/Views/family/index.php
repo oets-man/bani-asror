@@ -37,8 +37,7 @@
                                         <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('s')">Baru</button>
-                                        <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('s')">Cari</button>
+                                        <button class="mt-1 btn btn-outline-warning" type="button" id="" onclick="editPasangan('Suami')">Edit</button>
                                         <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('s')">Hapus</button>
                                     </div>
                                 </div>
@@ -58,8 +57,7 @@
                                         <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-primary" type="button" id="" onclick="baru('i')">Baru</button>
-                                        <button class="mt-1 btn btn-outline-info" type="button" id="" onclick="cari('i')">Cari</button>
+                                        <button class="mt-1 btn btn-outline-warning" type="button" id="" onclick="editPasangan('Istri')">Edit</button>
                                         <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('i')">Hapus</button>
                                     </div>
                                 </div>
@@ -88,7 +86,7 @@
                         </div>
                     </div>
 
-                    <!-- alamat -->
+                    <!-- alamat prov kab -->
                     <label for="" class="form-label">Alamat Tinggal</label>
                     <div class="row">
                         <div class="col-xl-6 col-sm-12">
@@ -115,6 +113,7 @@
                         </div>
                     </div>
 
+                    <!-- alamat kec desa -->
                     <div class="row">
                         <div class="col-xl-6 col-sm-12">
                             <div class="input-group mb-3">
@@ -140,6 +139,7 @@
                         </div>
                     </div>
 
+                    <!-- alamat jl -->
                     <div class="row">
                         <div class="col-12">
                             <div class="input-group mb-3">
@@ -161,7 +161,6 @@
 
         <!-- data anak -->
         <div class="col-xl-4 col-md-4 col-sm-12">
-            <?= form_open('child/save'); ?>
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data Anak
@@ -183,7 +182,7 @@
                                 </tr>
                             </thead>
                             <?php if (count($child) > 0) : ?>
-                                <tbody id="input-child">
+                                <tbody>
                                     <?php
                                     $no = 1;
                                     foreach ($child as $c) : ?>
@@ -206,21 +205,19 @@
 
                 <div class="card-footer p-2 bg-light-info border-0">
                     <button type="button" class="btn-primary btn" onclick="baru('a');" id="abaru">Baru</button>
-                    <button type="button" class="btn-info btn" data-bs-toggle="modal" data-bs-target="#modal-cari">Cari</button>
+                    <button type="button" class="btn-info btn" onclick="showModalCari('Anak')">Cari</button>
                 </div>
             </div>
-            <?= form_close(); ?>
         </div>
 
     </div>
 </div>
 
 <!-- modal cari -->
-<?php echo view('member/modal-cari') ?>
+<?= view('member/modal-cari') ?>
 
 <!-- modal edit-->
-<?php //echo view('member/modal-edit') 
-?>
+<?= view('member/modal-edit') ?>
 
 <!-- end section content -->
 <?= $this->endSection() ?>
@@ -230,75 +227,6 @@
 <script>
     <?= view('js/ajaxAlamat.js'); ?>
     <?= view('js/ajaxDelete.js'); ?>
-
-    function baru(p) {
-        let html = '';
-        //kosongkan input
-        $('#add-anggota :input').val('');
-        $('#add-anggota input[name=csrf_test_name]').val('<?= csrf_hash(); ?>');
-
-        // masih ADA masalah pada CHECKBOX
-        // $("#add-anggota input[name=wafat_muda]").prop("checked", false);  
-
-        if (p == 's') {
-            html = `
-                <label for="" class="form-label">Jenis Kelamin</label>
-                <select readonly class="form-select" name="lp" aria-label="">
-                    <option selected value="L">Laki-Laki</option>
-                </select>
-                <input type="hidden" name="member_add" value="s">
-                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
-                `;
-        } else if (p == 'i') {
-            html = `
-                <label for="" class="form-label">Jenis Kelamin</label>
-                <select readonly class="form-select" name="lp" aria-label="">
-                    <option selected value="P">Perempuan</option>
-                </select>
-                <input type="hidden" name="member_add" value="i">
-                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
-                `;
-        } else if (p == 'a') {
-            html = `
-                <label for="" class="form-label">Jenis Kelamin</label>
-                <select required class="form-select" name="lp" aria-label="">
-                    <option value="" selected>Pilih</option>
-                    <option value="L">Laki-Laki</option>
-                    <option value="P">Perempuan</option>
-                </select>
-                <input type="hidden" name="member_add" value="a">
-                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
-                `;
-        }
-        $('#input-lp').html(html);
-        $('#add-anggota').modal('show');
-    }
-
-    function cari(p) {
-        let pasangan = '';
-        if (p == 's') {
-            pasangan = 'suami';
-        } else if (p == 'i') {
-            pasangan = 'istri';
-        }
-        Swal.fire({
-            icon: 'question',
-            title: 'Edit data ' + pasangan + '?',
-            text: 'Tambah baru atau cari dari data yang sudah ada.',
-            showConfirmButton: true,
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Cari',
-            denyButtonText: 'Baru',
-            cancelButtonText: 'Tutup',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                alert('belum');
-            } else if (result.isDenied) {
-                $('#add-anggota').modal('show');
-            }
-        });
-    }
 
     function hapusPasangan(p) {
         if (p == 's') {
@@ -334,6 +262,112 @@
         let footer = 'Aksi ini hanya menghapus data anak, bukan data anggota.';
         ajaxDelete(id, url1, url2, title, body, footer);
 
+    }
+
+    function editPasangan(req) {
+        idSuami = "<?= $family->id_suami ?>"
+        idIstri = "<?= $family->id_istri ?>"
+
+        if (req == 'Suami' && idSuami !== '') {
+            Swal.fire({
+                title: 'Yakin?',
+                text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
+                icon: 'warning',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Ya. Cari!',
+                denyButtonText: 'Ya. Baru!',
+                cancelButtonText: 'Gagal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showModalCari(req);
+                } else if (result.isDenied) {
+                    baru('s');
+                }
+            });
+        } else if (req == 'Istri' && idIstri !== '') {
+            Swal.fire({
+                title: 'Yakin?',
+                text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
+                icon: 'warning',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Ya. Cari!',
+                denyButtonText: 'Ya. Baru!',
+                cancelButtonText: 'Gagal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showModalCari(req);
+                } else if (result.isDenied) {
+                    baru('i');
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Tetapkan Pasangan',
+                text: `Cari dari data yang sudah ada atau buat baru`,
+                icon: 'question',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Cari',
+                denyButtonText: 'Baru',
+                cancelButtonText: 'Gagal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showModalCari(req);
+                } else if (result.isDenied) {
+                    baru('i');
+                }
+            });
+        }
+    }
+
+    function baru(req) {
+        let html = '';
+        //kosongkan input
+        $('#modal-edit :input').val('');
+        $('#modal-edit input[name=csrf_test_name]').val('<?= csrf_hash(); ?>');
+
+        // masih ADA masalah pada CHECKBOX
+        // $("#modal-edit input[name=wafat_muda]").prop("checked", false);  
+
+        if (req == 's') {
+            html = `
+                <label for="" class="form-label">Jenis Kelamin</label>
+                <select readonly class="form-select" name="lp" aria-label="">
+                    <option selected value="L">Laki-Laki</option>
+                </select>
+                <input type="hidden" name="member_add" value="s">
+                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
+                `;
+        } else if (req == 'i') {
+            html = `
+                <label for="" class="form-label">Jenis Kelamin</label>
+                <select readonly class="form-select" name="lp" aria-label="">
+                    <option selected value="P">Perempuan</option>
+                </select>
+                <input type="hidden" name="member_add" value="i">
+                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
+                `;
+        } else if (req == 'a') {
+            html = `
+                <label for="" class="form-label">Jenis Kelamin</label>
+                <select required class="form-select" name="lp" aria-label="">
+                    <option value="" selected>Pilih</option>
+                    <option value="L">Laki-Laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+                <input type="hidden" name="member_add" value="a">
+                <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
+                `;
+        }
+        $('#input-lp').html(html);
+        $('#modal-edit').modal('show');
+    }
+
+    function showModalCari(req) {
+        $('#request-from').html(req)
+        $('#modal-cari').modal('show');
     }
 </script>
 

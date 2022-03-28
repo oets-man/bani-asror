@@ -163,7 +163,7 @@ class Member extends BaseController
         $no = $request->getPost("start");
 
         foreach ($lists as $list) {
-            $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id, \"$req\")'><i class='bi bi-check2-circle'></i></button>";
+            $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id)'><i class='bi bi-check2-circle'></i></button>";
             if (!$req) {
                 $tombolSet = "<button type='button' class='btn btn-outline-secondary btn-sm' disabled><i class='bi bi-check2-circle'></i></button>";
             }
