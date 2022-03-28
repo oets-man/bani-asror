@@ -37,8 +37,8 @@
                                         <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-warning" type="button" id="" onclick="editPasangan('Suami')">Edit</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('s')">Hapus</button>
+                                        <button class="mt-1 btn btn-outline-warning" type="button" onclick="editPasangan('Suami')">Edit</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" onclick="hapusPasangan('Suami')" <?= $family->id_suami ? '' : 'disabled' ?>>Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +57,8 @@
                                         <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
                                     </h5>
                                     <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-warning" type="button" id="" onclick="editPasangan('Istri')">Edit</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" id="" onclick="hapusPasangan('i')">Hapus</button>
+                                        <button class="mt-1 btn btn-outline-warning" type="button" onclick="editPasangan('Istri')">Edit</button>
+                                        <button class="mt-1 btn btn-outline-danger" type="button" onclick="hapusPasangan('Istri')" <?= $family->id_istri ? '' : 'disabled' ?>>Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -228,21 +228,14 @@
     <?= view('js/ajaxAlamat.js'); ?>
     <?= view('js/ajaxDelete.js'); ?>
 
-    function hapusPasangan(p) {
-        if (p == 's') {
-            $('#suami').html(null);
-            $('#id_suami').attr('value', null);
-            $('#avatar_suami').attr('src', null);
-        } else if (p == 'i') {
-            $('#istri').html(null);
-            $('#id_istri').attr('value', null);
-            $('#avatar_istri').attr('src', null);
-        }
-        Swal.fire(
-            'Hapus pasangan?',
-            'Tekan tombol simpan untuk menyimpan perubahan, atau refresh halaman jika ingin membatalkan.',
-            'warning'
-        )
+    function hapusPasangan(req) {
+        let url1 = "<?= site_url('family/deletepasangan/'); ?>" + req;
+        let url2 = null;
+        let title = `Hapus ${req}?`;
+        let body = null;
+        let footer = null;
+        let id = <?= $family->id ?>;
+        ajaxDelete(id, url1, url2, title, body, footer);
     }
 
     function deleteFamily(id) {

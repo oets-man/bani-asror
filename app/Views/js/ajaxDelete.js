@@ -34,11 +34,13 @@ function ajaxDelete(id, url1, url2=null,textTitle=null, textBody=null,textFooter
                             }
                         });
                     } else {
-                        // alert("Gagal dihapus");
-                        Swal.fire(
-                            'Gagal!',
-                            'Data gagal dihapus. <br>Mungkin yang bersangkutan memiliki subdata <br>(hapus terlebih dahulu subdata).',
-                            'danger');
+                        Swal.fire({
+                            title: 'Oops...',
+                            text: response.message ? response.message: 'Data gagal dihapus. <br>Mungkin yang bersangkutan memiliki subdata <br>(hapus terlebih dahulu subdata).',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 },
                 error: function(xhr, thrownError) {

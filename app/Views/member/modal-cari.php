@@ -95,8 +95,8 @@
             success: function(response) {
                 // return console.log(response);
                 // exit;
-                $('#modal-cari').modal('hide');
                 if (response.success == true) {
+                    $('#modal-cari').modal('hide');
                     Swal.fire({
                         icon: 'success',
                         title: response.message,
@@ -104,6 +104,14 @@
                         timer: 1500
                     }).then((result) => {
                         location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Oops...',
+                        text: response.message,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                 }
             },

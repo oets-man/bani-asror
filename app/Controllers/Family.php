@@ -16,6 +16,7 @@ class Family extends BaseController
         $this->family = new FamilyModel();
         $this->alamat = new AlamatModel;
         $this->child = new ChildModel();
+        $this->member = new MemberModel();
     }
 
     public function index($id = null)
@@ -67,14 +68,54 @@ class Family extends BaseController
         $id_family = $this->request->getPost('id_family');
 
         if ($req == 'suami') {
+            $cek = $this->member->where(['id' => $id_member, 'lp' => 'P'])->first();
+            if ($cek) {
+                return json_encode([
+                    'success' => false,
+                    'message' => "Lho... Suami kok cewek!?"
+                ]);
+            }
             $this->family->update($id_family, ['id_suami' => $id_member]);
         } else if ($req == 'istri') {
+            $cek = $this->member->where(['id' => $id_member, 'lp' => 'L'])->first();
+            if ($cek) {
+                return json_encode([
+                    'success' => false,
+                    'message' => "Lho... Istri kok cowok!?"
+                ]);
+            }
             $this->family->update($id_family, ['id_istri' => $id_member]);
         }
         $req = ucfirst($req);
         return json_encode([
             'success' => true,
             'message' => "$req berhasil diupdate"
+        ]);
+    }
+
+    public function deletePasangan($req)
+    {
+        if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
+        $id = $this->request->getPost('id');
+
+        $req = strtolower($req);
+
+        try {
+            if ($req == 'suami') {
+                $this->family->update($id, ['id_suami' => NULL]);
+            } else if ($req == 'istri') {
+                $this->family->update($id, ['id_istri' => NULL]);
+            }
+        } catch (\Throwable $th) {
+            return json_encode([
+                'success' => false,
+                'message' => "Aksi tidak dapat dilaksanakan"
+            ]);
+        }
+        $req = ucfirst($req);
+        return json_encode([
+            'success' => true,
+            'message' => "$req berhasil dihapus"
         ]);
     }
 
