@@ -166,7 +166,7 @@
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data Anak
                         <span class="float-end">
-                            <button class="btn btn-sm btn-outline-primary" onclick="">
+                            <button class="btn btn-sm btn-outline-primary" onclick="" disabled>
                                 <i class="bi bi-sort-numeric-down"></i>
                             </button>
                         </span>
@@ -192,7 +192,8 @@
                                             <td><?= anchor(site_url('member/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
                                             <td class="text-end">
                                                 <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
-                                                <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a>
+                                                <!-- tak mau ketika ada modal-cari -->
+                                                <!-- <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a> -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -205,10 +206,7 @@
 
                 <div class="card-footer p-2 bg-light-info border-0">
                     <button type="button" class="btn-primary btn" onclick="baru('a');" id="abaru">Baru</button>
-                    <button type="button" class="btn-info btn">Cari</button>
-                    <div class="float-end">
-                        <!-- <button type="submit" class="btn-success btn">Simpan</button> -->
-                    </div>
+                    <button type="button" class="btn-info btn" data-bs-toggle="modal" data-bs-target="#modal-cari">Cari</button>
                 </div>
             </div>
             <?= form_close(); ?>
@@ -217,19 +215,24 @@
     </div>
 </div>
 
-<!-- modal -->
-<?= view('member/modal'); ?>
+<!-- modal cari -->
+<?php echo view('member/modal-cari') ?>
 
+<!-- modal edit-->
+<?php //echo view('member/modal-edit') 
+?>
+
+<!-- end section content -->
 <?= $this->endSection() ?>
 
-<!-- footer -->
+<!-- section footer -->
 <?= $this->section('footer') ?>
 <script>
     <?= view('js/ajaxAlamat.js'); ?>
     <?= view('js/ajaxDelete.js'); ?>
 
     function baru(p) {
-        var html = '';
+        let html = '';
         //kosongkan input
         $('#add-anggota :input').val('');
         $('#add-anggota input[name=csrf_test_name]').val('<?= csrf_hash(); ?>');
@@ -258,8 +261,8 @@
         } else if (p == 'a') {
             html = `
                 <label for="" class="form-label">Jenis Kelamin</label>
-                <select class="form-select" name="lp" aria-label="">
-                    <option selected value="">Pilih</option>
+                <select required class="form-select" name="lp" aria-label="">
+                    <option value="" selected>Pilih</option>
                     <option value="L">Laki-Laki</option>
                     <option value="P">Perempuan</option>
                 </select>
@@ -333,4 +336,6 @@
 
     }
 </script>
+
+<!-- end section footer -->
 <?= $this->endSection(); ?>

@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ChildModel;
 use App\Models\FamilyModel;
 use App\Models\MemberModel;
+use Config\Services;
 
 class Member extends BaseController
 {
@@ -118,9 +119,10 @@ class Member extends BaseController
         echo json_encode($response);
     }
 
-    public function find($id)
+    public function find()
     {
         if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
+        $id = $this->request->getPost('id');
         $response = [
             'errors' => null,
             'message' => null,
@@ -148,5 +150,39 @@ class Member extends BaseController
             'success' => true,
             'message' => 'Anggota berhasil dihapus'
         ]);
+    }
+
+    public function membersParents($req = null)
+    {
+        // d($this->request->getPost());
+        $request = Services::request();
+        if (!$request->getPost()) return exit("Akses ditolak");
+
+        $lists = $this->member->get_datatables();
+        $data = [];
+        $no = $request->getPost("start");
+
+        foreach ($lists as $list) {
+            $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id, \"$req\")'><i class='bi bi-check2-circle'></i></button>";
+            if (!$req) {
+                $tombolSet = "<button type='button' class='btn btn-outline-secondary btn-sm' disabled><i class='bi bi-check2-circle'></i></button>";
+            }
+            $row = [];
+            $row[] = $tombolSet;
+            $row[] = $list->nama;
+            $row[] = $list->ortu1;
+            $row[] = $list->ortu2;
+            $row[] = $list->ortu3;
+            $data[] = $row;
+        }
+        $output = [
+            "draw" => $request->getPost('draw'),
+            "recordsTotal" => $this->member->count_all(),
+            "recordsFiltered" => $this->member->count_filtered(),
+            "data" => $data,
+            csrf_token() => csrf_hash()
+        ];
+
+        return json_encode($output);
     }
 }

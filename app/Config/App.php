@@ -23,8 +23,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost:8080/';
-    // public $baseURL = 'http://localhost/bani-asror/public/';
+    // public $baseURL = 'http://localhost:8080/';
+    public $baseURL = 'http://localhost/bani-asror/public/';
 
     /**
      * --------------------------------------------------------------------------
@@ -37,7 +37,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $indexPage = '';
+    // public $indexPage = '';
+    public $indexPage = 'index.php';
 
     /**
      * --------------------------------------------------------------------------

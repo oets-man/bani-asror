@@ -8,7 +8,7 @@ $(document).ready(function() {
         $('#desa').html('<option value="">Pilih Desa/ Kelurahan</option>');
 
         e.preventDefault();
-        var prov = $(this).val();
+        let prov = $(this).val();
         if (prov != '') {
             $.ajaxSetup({
                 headers: {
@@ -16,7 +16,7 @@ $(document).ready(function() {
                 }
             });
             $.ajax({
-                url: "<?= base_url('alamat/index') ?>",
+                url: "<?= site_url('alamat/index') ?>",
                 method: 'POST',
                 data: {
                     id: prov,
@@ -24,8 +24,8 @@ $(document).ready(function() {
                 },
                 dataType: "JSON",
                 success: function(data) {
-                    var html = '<option value="">Pilih Kabupaten</option>';
-                    for (var i = 0; i < data.list.length; i++) {
+                    let html = '<option value="">Pilih Kabupaten</option>';
+                    for (let i = 0; i < data.list.length; i++) {
                         html += '<option value="' + data.list[i].id + '">' + data.list[i].kabupaten + ' (' + data.list[i].kab_kota + ')' + '</option>';
                     }
                     $('#kab').html(html);
@@ -38,7 +38,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            var html = '<option value="">Pilih Kabupaten</option>';
+            let html = '<option value="">Pilih Kabupaten</option>';
             $('#kab').html(html);
         }
     });
@@ -49,7 +49,7 @@ $(document).ready(function() {
         $('#desa').html('<option value="">Pilih Desa/ Kelurahan</option>');
 
         e.preventDefault();
-        var kab = $(this).val();
+        let kab = $(this).val();
         if (kab != '') {
             $.ajaxSetup({
                 headers: {
@@ -57,7 +57,7 @@ $(document).ready(function() {
                 }
             });
             $.ajax({
-                url: "<?= base_url('alamat/index') ?>",
+                url: "<?= site_url('alamat/index') ?>",
                 method: 'POST',
                 data: {
                     id: kab,
@@ -65,8 +65,8 @@ $(document).ready(function() {
                 },
                 dataType: "JSON",
                 success: function(data) {
-                    var html = '<option value="">Pilih Kecamatan</option>';
-                    for (var i = 0; i < data.list.length; i++) {
+                    let html = '<option value="">Pilih Kecamatan</option>';
+                    for (let i = 0; i < data.list.length; i++) {
                         html += '<option value="' + data.list[i].id + '">' + data.list[i].kecamatan + '</option>';
                     }
                     $('#kec').html(html);
@@ -79,7 +79,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            var html = '<option value="">Pilih Kecamatan</option>';
+            let html = '<option value="">Pilih Kecamatan</option>';
             $('#kec').html(html);
         }
     });
@@ -89,7 +89,7 @@ $(document).ready(function() {
         $('#desa').html('<option value="">Pilih Desa/ Kelurahan</option>');
 
         e.preventDefault();
-        var kec = $(this).val();
+        let kec = $(this).val();
         if (kec != '') {
             $.ajaxSetup({
                 headers: {
@@ -97,7 +97,7 @@ $(document).ready(function() {
                 }
             });
             $.ajax({
-                url: "<?= base_url('alamat/index') ?>",
+                url: "<?= site_url('alamat/index') ?>",
                 method: 'POST',
                 data: {
                     id: kec,
@@ -105,8 +105,8 @@ $(document).ready(function() {
                 },
                 dataType: "JSON",
                 success: function(data) {
-                    var html = '<option value="">Pilih Desa/ Kelurahan</option>';
-                    for (var i = 0; i < data.list.length; i++) {
+                    let html = '<option value="">Pilih Desa/ Kelurahan</option>';
+                    for (let i = 0; i < data.list.length; i++) {
                         html += '<option value="' + data.list[i].desa + '">' + data.list[i].desa + '</option>';
                     }
                     $('#desa').html(html);
@@ -119,7 +119,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            var html = '<option value="">Pilih Desa/ Kelurahan</option>';
+            let html = '<option value="">Pilih Desa/ Kelurahan</option>';
             $('#desa').html(html);
         }
     });

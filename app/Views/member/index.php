@@ -162,7 +162,7 @@
 </div>
 
 <!-- modal -->
-<?= view('member/modal'); ?>
+<?= view('member/modal-edit'); ?>
 
 
 <?= $this->endSection() ?>
