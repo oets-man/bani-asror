@@ -18,7 +18,7 @@
             ?>
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Keluarga</h5>
+                    <h5 class="my-0">Data Pasangan</h5>
                 </div>
                 <input type="hidden" name="id" value="<?= $family->id; ?>">
                 <div class="card-body py-4 px-4">
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn btn-danger" onclick="deleteFamily('<?= $family->id; ?>')">Hapus</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteFamily(<?= $family->id; ?>)">Hapus</button>
                     <div class="float-end">
                         <button type="submit" class="btn-success btn">Simpan</button>
                     </div>
@@ -163,36 +163,30 @@
         <div class="col-xl-4 col-md-4 col-sm-12">
             <div class="card shadow my-4">
                 <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Anak
-                        <span class="float-end">
-                            <button class="btn btn-sm btn-outline-primary" onclick="" disabled>
-                                <i class="bi bi-sort-numeric-down"></i>
-                            </button>
-                        </span>
-                    </h5>
+                    <h5 class="my-0">Data Anak</h5>
                 </div>
+                <?= form_open('child/saveall/'); ?>
                 <div class="card-body py-4 px-4">
                     <div class="table-responsive">
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <td>No</td>
+                                    <td>Urut</td>
                                     <td>Anak</td>
                                     <td class="text-end">Aksi</td>
                                 </tr>
                             </thead>
                             <?php if (count($child) > 0) : ?>
                                 <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($child as $c) : ?>
+                                    <?php foreach ($child as $c) : ?>
                                         <tr>
-                                            <td><?= $no++; ?></td>
-                                            <td><?= anchor(site_url('member/') . $c->id_member, $c->nama . ' (' . $c->lp . ')'); ?></td>
+                                            <td>
+                                                <input type="hidden" name="id[]" value="<?= $c->id; ?>">
+                                                <input type="number" name="urut[]" class="form-control-plaintext" value="<?= $c->urut; ?>" style="max-width: fit-content;">
+                                            </td>
+                                            <td><?= anchor(site_url('member/') . $c->id_member, $c->nama); ?></td>
                                             <td class="text-end">
-                                                <a class="btn btn-sm btn-outline-danger" onclick="deleteChild('<?= $c->id; ?>')"><i class="bi bi-trash-fill"></i></a>
-                                                <!-- tak mau ketika ada modal-cari -->
-                                                <!-- <a class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $c->id_member; ?>')"><i class="bi bi-pencil-square"></i></a> -->
+                                                <a class="btn btn-sm btn-outline-danger" onclick="deleteChild(<?= $c->id; ?>)"><i class="bi bi-trash-fill"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -200,13 +194,14 @@
                             <?php endif; ?>
                         </table>
                     </div>
-
                 </div>
-
                 <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn-primary btn" onclick="baru('a');" id="abaru">Baru</button>
-                    <button type="button" class="btn-info btn" onclick="showModalCari('Anak')">Cari</button>
+                    <button type="button" class="btn-info btn" onclick="tambahAnak();">Tambah</button>
+                    <div class="float-end">
+                        <button type="submit" class="btn-success btn">Simpan</button>
+                    </div>
                 </div>
+                <?= form_close(); ?>
             </div>
         </div>
 
@@ -361,6 +356,25 @@
     function showModalCari(req) {
         $('#request-from').html(req)
         $('#modal-cari').modal('show');
+    }
+
+    function tambahAnak() {
+        Swal.fire({
+            title: 'Tambah Anak',
+            text: `Cari dari data yang sudah ada atau buat baru`,
+            icon: 'question',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Cari',
+            denyButtonText: 'Baru',
+            cancelButtonText: 'Gagal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                showModalCari('Anak');
+            } else if (result.isDenied) {
+                baru('a');
+            }
+        });
     }
 </script>
 

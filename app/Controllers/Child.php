@@ -31,7 +31,7 @@ class Child extends BaseController
         ]);
     }
 
-    function save($id = null)
+    public function save($id = null)
     {
         if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
         if (!$id) {
@@ -46,5 +46,17 @@ class Child extends BaseController
                 'message' => 'Anak berhasil ditambahkan'
             ]);
         }
+    }
+    public function saveAll()
+    {
+        if (!$this->request->getPost()) return exit('Tidak dapat diproses');
+
+        $id = $this->request->getPost('id');
+        $urut = $this->request->getPost('urut');
+        for ($i = 0; $i < count($id); $i++) {
+            $u = strlen($urut[$i]) !== 0 ? intval($urut[$i]) : NULL;
+            $this->child->update($id[$i], ['urut' => $u]);
+        }
+        return redirect()->back();
     }
 }
