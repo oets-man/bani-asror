@@ -15,11 +15,11 @@ class AlamatModel extends Model
     public function __construct()
     {
         $this->db = db_connect();
-        $this->tabelProv    = $this->db->table('list_provinsi');
-        $this->tabelKab     = $this->db->table('list_kabupaten');
-        $this->tabelKec     = $this->db->table('list_kecamatan');
-        $this->tabelDesa     = $this->db->table('list_desa');
-        $this->tabelKotaLahir     = $this->db->table('list_kota_lahir');
+        $this->tabelProv        = $this->db->table('list_provinsi');
+        $this->tabelKab         = $this->db->table('list_kabupaten');
+        $this->tabelKec         = $this->db->table('list_kecamatan');
+        $this->tabelDesa        = $this->db->table('list_desa');
+        $this->tabelKotaLahir   = $this->db->table('list_kota_lahir');
     }
 
     public function getKotaLahir()

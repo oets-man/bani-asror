@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Validation;
+namespace App\Libraries;
 
-class MyRules
+class MyValidationRules
 {
 	public function valid_name($str): bool
 	{

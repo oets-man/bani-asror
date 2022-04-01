@@ -104,7 +104,7 @@
                         // console.log(text)
                         Swal.fire({
                             icon: 'error',
-                            title: 'Gagal',
+                            title: 'Not Valid',
                             text: text,
                             showConfirmButton: true,
                         });
