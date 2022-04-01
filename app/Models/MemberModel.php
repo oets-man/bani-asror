@@ -25,7 +25,7 @@ class MemberModel extends Model
 
     // Validation
     protected $validationRules      = [
-        'nama' => 'required|valid_name',
+        'nama' => 'required|valid_name|min_length[3]',
         'lp' => 'required'
     ];
     protected $validationMessages   = [
@@ -33,7 +33,7 @@ class MemberModel extends Model
             'required' => 'Tentukan jenis kelamin.'
         ],
         'nama' => [
-            'valid_name' => 'Terdapat karakter yang tidak didukung pada input nama.'
+            'valid_name' => 'Input nama hanya menerima karakter huruf.'
         ],
     ];
     protected $skipValidation       = false;

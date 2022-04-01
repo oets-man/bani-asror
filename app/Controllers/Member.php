@@ -114,18 +114,20 @@ class Member extends BaseController
             //update member
             $member = $this->member->find($data['id']);
             if ($member) {
-                $update = $this->member->update($data['id'], $data);
-                if (!$update) {
+                $this->member->update($data['id'], $data);
+                $errors = $this->member->errors();
+                if ($errors) {
                     $response = [
                         'success' => false,
-                        'message' => $this->member->errors(),
+                        'message' => $errors,
+                    ];
+                } else {
+                    $message = 'Data berhasil diupdate.';
+                    $response = [
+                        'success' => true,
+                        'message' => $message,
                     ];
                 }
-                $message = 'Data berhasil diupdate.';
-                $response = [
-                    'success' => true,
-                    'message' => $message,
-                ];
             }
         }
         // $response = ['data' => $data, 'message' => $message, 'errors' => $errors, 'csrf_token' => csrf_hash()];
