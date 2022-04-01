@@ -47,6 +47,7 @@ class Member extends BaseController
 
     public function save()
     {
+        // terima dari view modal edit
         // dd($this->request->getPost());
 
         if (!$this->request->isAJAX()) return exit('Maaf, tidak dapat diproses.');
@@ -73,6 +74,14 @@ class Member extends BaseController
         if ($isNew) {
             //insert member
             $this->member->insert($data);
+            $errors = $this->member->errors();
+            if ($errors) {
+                return json_encode([
+                    'success' => false,
+                    'message' => $this->member->errors(),
+                ]);
+            }
+
             $newID = $this->member->getInsertID();
             if ($member_add == 'a') {
                 //insert child
@@ -105,14 +114,18 @@ class Member extends BaseController
             //update member
             $member = $this->member->find($data['id']);
             if ($member) {
-                $saveMember = $this->member->update($data['id'], $data);
-                if ($saveMember) {
-                    $message = 'Data berhasil diupdate.';
+                $update = $this->member->update($data['id'], $data);
+                if (!$update) {
                     $response = [
-                        'success' => true,
-                        'message' => $message,
+                        'success' => false,
+                        'message' => $this->member->errors(),
                     ];
                 }
+                $message = 'Data berhasil diupdate.';
+                $response = [
+                    'success' => true,
+                    'message' => $message,
+                ];
             }
         }
         // $response = ['data' => $data, 'message' => $message, 'errors' => $errors, 'csrf_token' => csrf_hash()];

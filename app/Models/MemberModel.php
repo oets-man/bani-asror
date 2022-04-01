@@ -24,8 +24,18 @@ class MemberModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+        'nama' => 'required|valid_name',
+        'lp' => 'required'
+    ];
+    protected $validationMessages   = [
+        'lp' => [
+            'required' => 'Tentukan jenis kelamin.'
+        ],
+        'nama' => [
+            'valid_name' => 'Terdapat karakter yang tidak didukung pada input nama.'
+        ],
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 

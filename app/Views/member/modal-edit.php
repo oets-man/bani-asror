@@ -83,8 +83,8 @@
                 success: function(response) {
                     // return console.log(response);
                     // exit;
-                    $('#modal-edit').modal('hide');
                     if (response.success == true) {
+                        $('#modal-edit').modal('hide');
                         Swal.fire({
                             icon: 'success',
                             title: response.message,
@@ -92,6 +92,21 @@
                             timer: 1500
                         }).then((result) => {
                             location.reload();
+                        });
+                    } else {
+                        // console.log(response.message);
+                        let obj = response.message;
+                        let text = '';
+                        for (var i = 0 in obj) {
+                            console.log(obj[i]);
+                            text += obj[i] + ' ';
+                        }
+                        // console.log(text)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: text,
+                            showConfirmButton: true,
                         });
                     }
                 },

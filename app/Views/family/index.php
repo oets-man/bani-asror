@@ -70,11 +70,11 @@
                         <div class="col-xl-6 col-sm-12">
                             <label for="" class="form-label">Tanggal Pernikahan</label>
                             <div class="input-group mb-3">
-                                <input type="date" name="tgl_nikah" class="form-control" value="<?= $family->tgl_nikah; ?>">
+                                <input type="date" name="tgl_nikah" class="form-control datepicker" value="<?= $family->tgl_nikah; ?>">
                             </div>
                         </div>
 
-                        <div class="col-xl-6 col-sm-12">
+                        <div class=" col-xl-6 col-sm-12">
                             <label for="" class="form-label">Status Cerai</label>
                             <div class="input-group mb-3">
                                 <select class="form-select" name="cerai" value="<?= $family->cerai; ?>">
@@ -196,7 +196,9 @@
                     </div>
                 </div>
                 <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn-info btn" onclick="tambahAnak();">Tambah</button>
+                    <button type="button" class="btn-primary btn" onclick="tambahAnak();">Tambah</button>
+
+
                     <div class="float-end">
                         <button type="submit" class="btn-success btn">Simpan</button>
                     </div>
