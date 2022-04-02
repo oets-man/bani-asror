@@ -17,15 +17,19 @@
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data
                         <span class="float-end">
-                            <button class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $data->id; ?>')">
+                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modal-avatar">
+                                <i class="bi bi-image"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $member->id; ?>')">
                                 <i class="bi bi-pencil-square"></i>
-                            </button></span>
+                            </button>
+                        </span>
                     </h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-5 col-sm-12">
-                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $data->avatar; ?>" alt="">
+                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $member->avatar; ?>" alt="">
                         </div>
                         <div class="col-xl-7 col-sm-12">
                             <div class="table-responsive">
@@ -33,43 +37,43 @@
                                     <tbody>
                                         <tr>
                                             <td>Nama</td>
-                                            <td><?= strtoupper($data->nama); ?> (<?= $data->lp; ?>)</td>
+                                            <td><?= strtoupper($member->nama); ?> (<?= $member->lp; ?>)</td>
                                         </tr>
                                         <tr>
                                             <td>الإسم</td>
-                                            <td><?= $data->nama_arab ?: '-'; ?></a></td>
+                                            <td><?= $member->nama_arab ?: '-'; ?></a></td>
                                         </tr>
                                         <tr>
                                             <td>Alias</td>
-                                            <td><?= $data->alias ?: '-'; ?></a></td>
+                                            <td><?= $member->alias ?: '-'; ?></a></td>
                                         </tr>
                                         <tr>
                                             <td>Ayah</td>
-                                            <td><?= $data->ayah ? anchor(site_url('member/') . $data->id_ayah, $data->ayah) : '-'; ?></td>
+                                            <td><?= $member->ayah ? anchor(site_url('member/') . $member->id_ayah, $member->ayah) : '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Ibu</td>
-                                            <td><?= $data->ibu ? anchor(site_url('member/') . $data->id_ibu, $data->ibu) : '-'; ?></td>
+                                            <td><?= $member->ibu ? anchor(site_url('member/') . $member->id_ibu, $member->ibu) : '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Alamat</td>
-                                            <td><?= $data->alamat ?: '-'; ?></td>
+                                            <td><?= $member->alamat ?: '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Lahir</td>
-                                            <td><?= $data->tgl_lahir ?: '-'; ?></td>
+                                            <td><?= $member->tgl_lahir ?: '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Wafat</td>
-                                            <td><?= $data->tgl_wafat ?: '-'; ?></td>
+                                            <td><?= $member->tgl_wafat ?: '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Usia Wafat</td>
-                                            <td><?= $data->usia_wafat ?: '-'; ?></td>
+                                            <td><?= $member->usia_wafat ?: '-'; ?></td>
                                         </tr>
                                         <tr>
                                             <td>Wafat Muda</td>
-                                            <td><?= $data->wafat_muda == 'Y' ? 'Ya' : '-'; ?></td>
+                                            <td><?= $member->wafat_muda == 'Y' ? 'Ya' : '-'; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -87,7 +91,7 @@
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Keluarga
                         <span class="float-end">
-                            <button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $data->id ?>', '<?= $data->lp; ?>')">
+                            <button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $member->id ?>', '<?= $member->lp; ?>')">
                                 <i class="bi bi-plus-square-fill"></i>
                             </button>
                         </span>
@@ -163,6 +167,7 @@
 
 <!-- modal -->
 <?= view('member/modal-edit'); ?>
+<?= view('member/modal-avatar'); ?>
 
 
 <?= $this->endSection() ?>

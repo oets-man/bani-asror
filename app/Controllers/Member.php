@@ -15,6 +15,7 @@ class Member extends BaseController
         $this->member = new MemberModel();
         $this->family = new FamilyModel();
         $this->child = new ChildModel();
+        $this->urlAvatar = 'assets/images/avatars/';
     }
 
     public function index($id = null)
@@ -38,13 +39,52 @@ class Member extends BaseController
         $data = [
             'title' => 'Anggota',
             'header' => 'Data Anggota',
-            'data' => $member,
+            'member' => $member,
             'keluarga' => $this->member->membersFamilies($id),
             'anak' => $this->member->membersChildren($id),
         ];
         return view('member/index', $data);
     }
 
+    public function avatar()
+    {
+        // d($this->request->getPost());
+        // dd($this->request->getFile('avatar'));
+        $id = $this->request->getPost('id');
+        if (!$this->validate([
+            'avatar' => [
+                'label'  => 'Gambar',
+                'rules'  => 'uploaded[avatar]|max_size[avatar,1024]|is_image[avatar]',
+                'errors' => [
+                    'uploaded' => 'Silakan pilih gambar.',
+                    'max_size' => 'Ukuran file terlalu besar (maks. 1 MB).',
+                    'is_image' => 'Berkas yang dipilih tidak didukung.'
+                ]
+            ]
+        ])) {
+            $validation =  \Config\Services::validation();
+            return $validation->listErrors();
+        }
+
+        try {
+            //upload avatar baru
+            $avatar = $this->request->getFile('avatar');
+            $name = $avatar->getRandomName();
+            $avatar->move($this->urlAvatar, $name);
+
+            //hapus avatar lama
+            $file = $this->member->find($id);
+            unlink($this->urlAvatar . $file['avatar']);
+
+            //update db
+            $update = $this->member->update($id, ['avatar' => $name]);
+            if (!$update)  return 'error';
+        } catch (\Throwable $th) {
+            throw $th->getMessage();
+        }
+
+        return redirect()->back();
+    }
     public function save()
     {
         // terima dari view modal edit
@@ -155,7 +195,13 @@ class Member extends BaseController
     {
         if (!$this->request->isAJAX()) return exit('Tidak dapat diproses');
         $id = $this->request->getPost('id');
+
         try {
+            //hapus file foto
+            $data = $this->member->find($id);
+            unlink($this->urlAvatar . $data['avatar']);
+
+            //delete db
             $this->member->delete($id);
         } catch (\Throwable $th) {
             $th->getMessage();
