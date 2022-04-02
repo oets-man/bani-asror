@@ -46,10 +46,17 @@ class Member extends BaseController
         return view('member/index', $data);
     }
 
+    public function test()
+    {
+        echo json_encode($this->request->getFiles());
+    }
+
     public function avatar()
     {
         // d($this->request->getPost());
         // dd($this->request->getFile('avatar'));
+        // echo json_encode($this->request->getFile('avatar'));
+        // exit;
         $id = $this->request->getPost('id');
         if (!$this->validate([
             'avatar' => [
@@ -64,6 +71,8 @@ class Member extends BaseController
         ])) {
             $validation =  \Config\Services::validation();
             return $validation->listErrors();
+            // echo json_encode($validation->getErrors());
+            // exit;
         }
 
         try {
@@ -75,15 +84,17 @@ class Member extends BaseController
             //hapus avatar lama
             $file = $this->member->find($id);
             unlink($this->urlAvatar . $file['avatar']);
-
-            //update db
-            $update = $this->member->update($id, ['avatar' => $name]);
-            if (!$update)  return 'error';
         } catch (\Throwable $th) {
-            throw $th->getMessage();
+            // throw $th->getMessage();
+            // echo json_encode($th->getMessage());
+            // exit;
         }
 
+        //update db
+        $update = $this->member->update($id, ['avatar' => $name]);
+        if (!$update)  return 'error';
         return redirect()->back();
+        // echo json_encode(['succuss' => true]);
     }
     public function save()
     {

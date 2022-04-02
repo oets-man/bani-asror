@@ -18,10 +18,10 @@
                     <h5 class="my-0">Data
                         <span class="float-end">
                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modal-avatar">
-                                <i class="bi bi-image"></i>
+                                <i class="bi bi-image"></i><small class="ms-2">foto</small>
                             </button>
                             <button class="btn btn-sm btn-outline-warning" onclick="editMember('<?= $member->id; ?>')">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-pencil-square"></i><small class="ms-2">edit</small>
                             </button>
                         </span>
                     </h5>
@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-5 col-sm-12">
-                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $member->avatar; ?>" alt="">
+                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $member->avatar; ?>">
                         </div>
                         <div class="col-xl-7 col-sm-12">
                             <div class="table-responsive">
@@ -92,7 +92,7 @@
                     <h5 class="my-0">Keluarga
                         <span class="float-end">
                             <button class="btn btn-sm btn-outline-primary" onclick="newFamily('<?= $member->id ?>', '<?= $member->lp; ?>')">
-                                <i class="bi bi-plus-square-fill"></i>
+                                <i class="bi bi-plus-square-fill"></i><small class="ms-2">tambah</small>
                             </button>
                         </span>
                     </h5>
@@ -168,7 +168,6 @@
 <!-- modal -->
 <?= view('member/modal-edit'); ?>
 <?= view('member/modal-avatar'); ?>
-
 
 <?= $this->endSection() ?>
 
