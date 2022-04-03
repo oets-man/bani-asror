@@ -28,7 +28,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="index.html"><img src="<?= base_url(); ?>/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                            <a href="<?= site_url(); ?>"><img src="<?= base_url(); ?>/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -45,8 +45,10 @@
                                 <i class="bi bi-house-fill"></i> <span>Dashboard</span>
                             </a>
                         </li>
+
                     </ul>
                     <!--  -->
+
                     <ul class="menu">
                         <li class="sidebar-title">Bani</li>
 
