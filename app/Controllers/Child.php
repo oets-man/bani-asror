@@ -49,6 +49,9 @@ class Child extends BaseController
     }
     public function saveAll()
     {
+
+        // dd($this->request->getPost());
+
         if (!$this->request->getPost()) return exit('Tidak dapat diproses');
 
         $id = $this->request->getPost('id');

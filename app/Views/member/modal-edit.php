@@ -40,11 +40,13 @@
                     <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat singkat (1 atau 2 kata)">
                 </div>
 
-                <div class="mb-3">
+                <!-- hidden sementara-->
+                <div class="mb-3" style="display: none;">
                     <label for="" class="form-label">Tanggal Lahir</label>
                     <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir">
                 </div>
-                <div class="mb-3">
+                <!-- hidden sementara-->
+                <div class="mb-3" style="display: none;">
                     <label for="" class="form-label">Tanggal Wafat</label>
                     <input type="date" class="form-control" name="tgl_wafat" id="tgl_wafat">
                 </div>

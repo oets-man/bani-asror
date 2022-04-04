@@ -236,12 +236,15 @@ class Member extends BaseController
 
         foreach ($lists as $list) {
             $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id)'><i class='bi bi-check2-circle'></i></button>";
+            $nama = $list->nama;
             if (!$req) {
                 $tombolSet = "<button type='button' class='btn btn-outline-secondary btn-sm' disabled><i class='bi bi-check2-circle'></i></button>";
+                $nama = anchor(site_url('member/') . $list->id, $list->nama);
             }
+
             $row = [];
             $row[] = $tombolSet;
-            $row[] = $list->nama;
+            $row[] = $nama;
             $row[] = $list->ortu1;
             $row[] = $list->ortu2;
             $row[] = $list->ortu3;

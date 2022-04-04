@@ -25,40 +25,40 @@
                     <div class="row">
 
                         <!-- suami -->
-                        <div class="col-xl-6 col-sm-12 mb-4">
-                            <div class="row">
-                                <div class="col-xl-5 col-md-6 col-sm-12">
+                        <div class="col-xl-6 col-sm-12 border border-1 mb-2">
+                            <div class="row p-2">
+                                <div class="col-xl-5 col-md-6 col-sm-12 p-0">
                                     <img id="avatar_suami" src="<?= base_url('/assets/images/avatars/') . '/' . $family->avatar_suami; ?>" class="img-thumbnail">
                                 </div>
-                                <div class="col-xl-7 col-md-6 col-sm-12">
+                                <div class="col-xl-7 col-md-6 col-sm-12 py-4">
                                     <h6>Suami</h6>
                                     <input type="hidden" name="id_suami" id="id_suami" value="<?= $family->id_suami !== null ? $family->id_suami : NULL; ?>">
                                     <h5 id="suami">
                                         <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
                                     </h5>
-                                    <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-warning" type="button" onclick="editPasangan('Suami')">Edit</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" onclick="hapusPasangan('Suami')" <?= $family->id_suami ? '' : 'disabled' ?>>Hapus</button>
+                                    <div class="">
+                                        <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Suami')">Edit</button>
+                                        <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Suami')" <?= $family->id_suami ? '' : 'disabled' ?>>Hapus</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- istri -->
-                        <div class="col-xl-6 col-sm-12 mb-4">
-                            <div class="row">
-                                <div class="col-xl-5 col-md-6 col-sm-12">
+                        <div class="col-xl-6 col-sm-12 border border-1 mb-2">
+                            <div class="row p-2">
+                                <div class="col-xl-5 col-md-6 col-sm-12 p-0">
                                     <img id="avatar_istri" src="<?= base_url('/assets/images/avatars/') . '/' . $family->avatar_istri; ?>" class="img-thumbnail">
                                 </div>
-                                <div class="col-xl-7 col-md-6 col-sm-12">
+                                <div class="col-xl-7 col-md-6 col-sm-12 py-4">
                                     <h6>Istri</h6>
                                     <input type="hidden" name="id_istri" id="id_istri" value="<?= $family->id_istri !== null ? $family->id_istri : NULL; ?>">
-                                    <h5 id="istri">
+                                    <h5 id="suami">
                                         <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
                                     </h5>
-                                    <div class="py-2">
-                                        <button class="mt-1 btn btn-outline-warning" type="button" onclick="editPasangan('Istri')">Edit</button>
-                                        <button class="mt-1 btn btn-outline-danger" type="button" onclick="hapusPasangan('Istri')" <?= $family->id_istri ? '' : 'disabled' ?>>Hapus</button>
+                                    <div class="">
+                                        <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Istri')">Edit</button>
+                                        <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Istri')" <?= $family->id_istri ? '' : 'disabled' ?>>Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                 <div class="card-header py-2 bg-light-info">
                     <h5 class="my-0">Data Anak</h5>
                 </div>
-                <?= form_open('child/saveall/'); ?>
+                <?= form_open('child/saveall'); ?>
                 <div class="card-body py-4 px-4">
                     <div class="table-responsive">
                         <table class="table mb-0">
@@ -173,7 +173,7 @@
                                 <tr>
                                     <td>Urut</td>
                                     <td>Anak</td>
-                                    <td class="text-end">Aksi</td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <?php if (count($child) > 0) : ?>
@@ -210,8 +210,7 @@
     </div>
 </div>
 
-<!-- modal cari -->
-<?= view('member/modal-cari') ?>
+
 
 <!-- modal edit-->
 <?= view('member/modal-edit') ?>
@@ -355,11 +354,6 @@
         $('#modal-edit').modal('show');
     }
 
-    function showModalCari(req) {
-        $('#request-from').html(req)
-        $('#modal-cari').modal('show');
-    }
-
     function tambahAnak() {
         Swal.fire({
             title: 'Tambah Anak',
@@ -375,6 +369,59 @@
                 showModalCari('Anak');
             } else if (result.isDenied) {
                 baru('a');
+            }
+        });
+    }
+
+    function setMember(idMember) {
+        const req = $('#request-from').html();
+        const idFamily = "<?= $family->id ?>";
+        // console.log(idMember);
+        // console.log(req);
+        let url = null;
+        if (req == 'Anak') {
+            url = "<?= site_url('child/save') ?>";
+        } else if (req == 'Suami') {
+            url = "<?= site_url('family/updatepasangan/suami') ?>";
+        } else if (req == 'Istri') {
+            url = "<?= site_url('family/updatepasangan/istri') ?>";
+        }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "<?= csrf_hash() ?>"
+            },
+            type: "post",
+            url: url,
+            data: {
+                id_family: idFamily,
+                id_member: idMember,
+            },
+            dataType: "json",
+            success: function(response) {
+                // return console.log(response);
+                // exit;
+                if (response.success == true) {
+                    $('#modal-cari').modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Oops...',
+                        text: response.message,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
             }
         });
     }

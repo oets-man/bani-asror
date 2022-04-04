@@ -39,85 +39,50 @@
 
 <script>
     $(document).ready(function() {
+
+    });
+
+    function dataTable() {
+        let url = "<?= site_url('member/membersparents') ?>";
+        if ($('#request-from').html() !== 'Anggota') {
+            url = "<?= site_url('member/membersparents/') ?>" + true; //by request to enable button
+        }
+
         let token = "<?= csrf_hash() ?>";
         let table = $('#table-member-cari').DataTable({
             processing: true,
             serverSide: true,
             order: [],
             ajax: {
-                url: "<?= site_url('member/membersparents/') ?>" + true, //by request to enable button
+                url: url,
                 type: "POST",
                 data: function(d) {
                     d.<?= csrf_token() ?> = token;
                 },
             },
             columnDefs: [{
-                    targets: [0],
-                    orderable: false,
-                    className: 'dt-body-center'
-                },
-                // {
-                //     targets: [2,3],
-                //     className: 'dt-body-center'
-                // },
-            ]
+                targets: [0],
+                orderable: false,
+                className: 'dt-body-center'
+            }]
         });
 
         table.on('xhr.dt', function(e, settings, json, xhr) {
             token = json.<?= csrf_token() ?>;
         });
-    });
+    }
 
-    function setMember(idMember) {
-        const req = $('#request-from').html();
-        const idFamily = "<?= $family->id ?>";
-        // console.log(idMember);
-        // console.log(req);
-        let url = null;
-        if (req == 'Anak') {
-            url = "<?= site_url('child/save') ?>";
-        } else if (req == 'Suami') {
-            url = "<?= site_url('family/updatepasangan/suami') ?>";
-        } else if (req == 'Istri') {
-            url = "<?= site_url('family/updatepasangan/istri') ?>";
+    function showModalCari(req) {
+        if (req) {
+            $('#request-from').html(req);
+        } else {
+            $('#request-from').html('Anggota');
         }
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': "<?= csrf_hash() ?>"
-            },
-            type: "post",
-            url: url,
-            data: {
-                id_family: idFamily,
-                id_member: idMember,
-            },
-            dataType: "json",
-            success: function(response) {
-                // return console.log(response);
-                // exit;
-                if (response.success == true) {
-                    $('#modal-cari').modal('hide');
-                    Swal.fire({
-                        icon: 'success',
-                        title: response.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then((result) => {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Oops...',
-                        text: response.message,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-            }
-        });
+
+        let table = $('#table-member-cari').DataTable();
+        table.destroy();
+        dataTable();
+        $('#modal-cari').modal('show');
+
     }
 </script>

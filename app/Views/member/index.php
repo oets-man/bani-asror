@@ -6,7 +6,7 @@
 
 <?= $this->section('content') ?>
 <div class="card-header h5 bg-light-success text-success py-3">
-    <?= $title; ?>
+    <?= $header; ?>
 </div>
 <div class="card-body py-2">
 
@@ -105,7 +105,7 @@
                                     <td>No</td>
                                     <td>Pasangan</td>
                                     <td>Anak</td>
-                                    <td class="text-end"><i class="bi bi-info-circle-fill"></i></td>
+                                    <!-- <td class="text-end"><i class="bi bi-info-circle-fill"></i></td> -->
                                 </tr>
                             </thead>
                             <?php if (count($keluarga) > 0) : ?>
@@ -117,7 +117,7 @@
                                             <td><?= $no++; ?></td>
                                             <td><?= $k->id_pasangan ? anchor(site_url('member/') . $k->id_pasangan, $k->pasangan) : '-' ?></td>
                                             <td><?= $k->children_count ?: '-'; ?></td>
-                                            <td class="text-end"><?= anchor(site_url('family/') . $k->id_family, '<i class="bi bi-info-circle"></i>'); ?></td>
+                                            <td class="text-end"><?= anchor(site_url('family/') . $k->id_family, '<i class="bi bi-info-circle"></i> detail', ['class' => 'btn btn-outline-info btn-sm btn']); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

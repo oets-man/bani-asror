@@ -116,7 +116,7 @@
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><?= anchor(site_url(), 'Cari', ['class' => 'btn btn-success']); ?></li>
+                                    <li class="breadcrumb-item"><button class="btn btn-primary" onclick="showModalCari()">Cari</button></li>
                                 </ol>
                             </nav>
                         </div>
@@ -151,6 +151,8 @@
 
     <?= $this->renderSection('footer') ?>
 
+    <!-- modal cari -->
+    <?= view('member/modal-cari') ?>
 </body>
 
 </html>
