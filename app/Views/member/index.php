@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-5 col-sm-12">
-                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars/') . '/' . $member->avatar; ?>">
+                            <img class="img-fluid rounded-start" src="<?= base_url('/assets/images/avatars') . '/' .  $member->avatar; ?>">
                         </div>
                         <div class="col-xl-7 col-sm-12">
                             <div class="table-responsive">
@@ -103,7 +103,7 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Pasangan</td>
+                                    <td><?= $member->lp == 'L' ? 'Istri' : 'Suami' ?></td>
                                     <td>Anak</td>
                                     <!-- <td class="text-end"><i class="bi bi-info-circle-fill"></i></td> -->
                                 </tr>

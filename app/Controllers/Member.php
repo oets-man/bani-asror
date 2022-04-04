@@ -96,6 +96,7 @@ class Member extends BaseController
         return redirect()->back();
         // echo json_encode(['succuss' => true]);
     }
+
     public function save()
     {
         // terima dari view modal edit
@@ -211,7 +212,11 @@ class Member extends BaseController
             //hapus file foto
             $data = $this->member->find($id);
             unlink($this->urlAvatar . $data['avatar']);
+            //code...
+        } catch (\Throwable $th) {
+        }
 
+        try {
             //delete db
             $this->member->delete($id);
         } catch (\Throwable $th) {

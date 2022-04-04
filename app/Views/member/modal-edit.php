@@ -127,8 +127,8 @@
 
     function deleteMember() {
         let id = $("#modal-edit input[name=id]").val();
-        let url1 = "<?= site_url('member/delete/'); ?>";
-        let url2 = window.location.pathname.includes('member') ? "<?= site_url('member/'); ?>" : null;
+        let url1 = "<?= site_url('member/delete'); ?>";
+        let url2 = window.location.pathname.includes('member') ? "<?= site_url('member'); ?>" : null;
         let title = 'Hapus Anggota?';
         let body = null;
         let footer = 'Data keluarga yang terhubung dengan id ini juga akan terpengaruh';

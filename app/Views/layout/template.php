@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= csrf_meta() ?>
 
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?= base_url('assets/images/favicon') ?>/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url('assets/images/favicon') ?>/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?= base_url('assets/images/favicon') ?>/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="<?= base_url('assets/images/favicon') ?>/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="<?= base_url('assets/images/favicon') ?>/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?= base_url('assets/images/favicon') ?>/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('assets/images/favicon') ?>/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('assets/images/favicon') ?>/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('assets/images/favicon') ?>/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="<?= base_url('assets/images/favicon') ?>/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('assets/images/favicon') ?>/favicon-16x16.png">
+    <link rel="manifest" href="<?= base_url('assets/images/favicon') ?>/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="<?= base_url('assets/images/favicon') ?>/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
     <title> <?= isset($title) ? $title : 'member Asror'; ?> </title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,7 +34,6 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <!-- <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/fontawesome/all.min.css" type="text/css"> -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/app.css">
-    <link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/favicon.svg" type="image/x-icon">
     <script src="<?= base_url(); ?>/assets/vendors/jquery/jquery.min.js"></script>
     <?= $this->renderSection('header') ?>
 </head>
@@ -28,7 +45,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="<?= site_url(); ?>"><img src="<?= base_url(); ?>/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                            <a href="<?= site_url(); ?>"><img src="<?= base_url(); ?>/assets/images/logo.png"></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -116,7 +133,7 @@
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><button class="btn btn-primary" onclick="showModalCari()">Cari</button></li>
+                                    <li class="breadcrumb-item"><button class="btn btn-outline-primary" onclick="showModalCari()"><i class="bi bi-search"></i> Cari</button></li>
                                 </ol>
                             </nav>
                         </div>

@@ -28,7 +28,7 @@
                         <div class="col-xl-6 col-sm-12 border border-1 mb-2">
                             <div class="row p-2">
                                 <div class="col-xl-5 col-md-6 col-sm-12 p-0">
-                                    <img id="avatar_suami" src="<?= base_url('/assets/images/avatars/') . '/' . $family->avatar_suami; ?>" class="img-thumbnail">
+                                    <img id="avatar_suami" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_suami; ?>" class="img-thumbnail">
                                 </div>
                                 <div class="col-xl-7 col-md-6 col-sm-12 py-4">
                                     <h6>Suami</h6>
@@ -48,7 +48,7 @@
                         <div class="col-xl-6 col-sm-12 border border-1 mb-2">
                             <div class="row p-2">
                                 <div class="col-xl-5 col-md-6 col-sm-12 p-0">
-                                    <img id="avatar_istri" src="<?= base_url('/assets/images/avatars/') . '/' . $family->avatar_istri; ?>" class="img-thumbnail">
+                                    <img id="avatar_istri" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_istri; ?>" class="img-thumbnail">
                                 </div>
                                 <div class="col-xl-7 col-md-6 col-sm-12 py-4">
                                     <h6>Istri</h6>
@@ -235,7 +235,7 @@
     }
 
     function deleteFamily(id) {
-        let url1 = "<?= site_url('family/delete/'); ?>";
+        let url1 = "<?= site_url('family/delete'); ?>";
         let url2 = "<?= site_url('member/') . session()->lastMemberID; ?>";
         let title = 'Hapus Keluarga?';
         let body = null;
@@ -244,7 +244,7 @@
     }
 
     function deleteChild(id) {
-        let url1 = "<?= site_url('child/delete/'); ?>";
+        let url1 = "<?= site_url('child/delete'); ?>";
         let url2 = null; //reload
         let title = 'Hapus Anak?';
         let body = null;
@@ -257,57 +257,78 @@
         idSuami = "<?= $family->id_suami ?>"
         idIstri = "<?= $family->id_istri ?>"
 
-        if (req == 'Suami' && idSuami !== '') {
-            Swal.fire({
-                title: 'Yakin?',
-                text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
-                icon: 'warning',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Ya. Cari!',
-                denyButtonText: 'Ya. Baru!',
-                cancelButtonText: 'Gagal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    showModalCari(req);
-                } else if (result.isDenied) {
-                    baru('s');
-                }
-            });
-        } else if (req == 'Istri' && idIstri !== '') {
-            Swal.fire({
-                title: 'Yakin?',
-                text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
-                icon: 'warning',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Ya. Cari!',
-                denyButtonText: 'Ya. Baru!',
-                cancelButtonText: 'Gagal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    showModalCari(req);
-                } else if (result.isDenied) {
-                    baru('i');
-                }
-            });
-        } else {
-            Swal.fire({
-                title: 'Tetapkan Pasangan',
-                text: `Cari dari data yang sudah ada atau buat baru`,
-                icon: 'question',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Cari',
-                denyButtonText: 'Baru',
-                cancelButtonText: 'Gagal',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    showModalCari(req);
-                } else if (result.isDenied) {
-                    baru('i');
-                }
-            });
+        if (req == 'Suami') {
+            if (idSuami !== '') {
+                Swal.fire({
+                    title: 'Yakin?',
+                    text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
+                    icon: 'warning',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya. Cari!',
+                    denyButtonText: 'Ya. Baru!',
+                    cancelButtonText: 'Gagal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        showModalCari(req);
+                    } else if (result.isDenied) {
+                        baru('s');
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Tetapkan ' + req,
+                    text: `Cari dari data yang sudah ada atau buat baru`,
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Cari',
+                    denyButtonText: 'Baru',
+                    cancelButtonText: 'Gagal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        showModalCari(req);
+                    } else if (result.isDenied) {
+                        baru('s');
+                    }
+                });
+            }
+        } else if (req == 'Istri') {
+            if (idIstri !== '') {
+                Swal.fire({
+                    title: 'Yakin?',
+                    text: `Data ${req} sudah ada. Anda ingin menggantinya?`,
+                    icon: 'warning',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya. Cari!',
+                    denyButtonText: 'Ya. Baru!',
+                    cancelButtonText: 'Gagal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        showModalCari(req);
+                    } else if (result.isDenied) {
+                        baru('i');
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Tetapkan ' + req,
+                    text: `Cari dari data yang sudah ada atau buat baru`,
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Cari',
+                    denyButtonText: 'Baru',
+                    cancelButtonText: 'Gagal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        showModalCari(req);
+                    } else if (result.isDenied) {
+                        baru('i');
+                    }
+                });
+            }
         }
     }
 
@@ -320,7 +341,7 @@
         // masih ADA masalah pada CHECKBOX
         // $("#modal-edit input[name=wafat_muda]").prop("checked", false);  
 
-        if (req == 's') {
+        if (req === 's') {
             html = `
                 <label for="" class="form-label">Jenis Kelamin</label>
                 <select readonly class="form-select" name="lp" aria-label="">
@@ -329,7 +350,7 @@
                 <input type="hidden" name="member_add" value="s">
                 <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
                 `;
-        } else if (req == 'i') {
+        } else if (req === 'i') {
             html = `
                 <label for="" class="form-label">Jenis Kelamin</label>
                 <select readonly class="form-select" name="lp" aria-label="">
@@ -338,7 +359,7 @@
                 <input type="hidden" name="member_add" value="i">
                 <input type="hidden" name="id_family" value="` + <?= $family->id ?> + `">
                 `;
-        } else if (req == 'a') {
+        } else if (req === 'a') {
             html = `
                 <label for="" class="form-label">Jenis Kelamin</label>
                 <select required class="form-select" name="lp" aria-label="">
