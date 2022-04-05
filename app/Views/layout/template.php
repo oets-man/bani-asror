@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
+    <title> <?= isset($title) ? 'Bani Asror / ' . $title : 'Bani Asror'; ?> </title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= csrf_meta() ?>
 
+    <!-- favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="<?= base_url('assets/images/favicon') ?>/apple-icon-72x72.png">
@@ -24,17 +27,16 @@
     <meta name="msapplication-TileImage" content="<?= base_url('assets/images/favicon') ?>/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title> <?= isset($title) ? $title : 'member Asror'; ?> </title>
-
+    <!-- Aplikasi -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/bootstrap.css">
-
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <!-- <link rel="stylesheet" href="<?= base_url(); ?>/assets/vendors/fontawesome/all.min.css" type="text/css"> -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/app.css">
     <script src="<?= base_url(); ?>/assets/vendors/jquery/jquery.min.js"></script>
+
+    <!-- header section -->
     <?= $this->renderSection('header') ?>
 </head>
 
@@ -160,12 +162,11 @@
         </div>
     </div>
     <script src="<?= base_url(); ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- <script src="<?= base_url(); ?>/assets/vendors/fontawesome/all.min.js"></script> -->
     <script src="<?= base_url(); ?>/assets/js/bootstrap.bundle.min.js"></script>
-
     <script src="<?= base_url(); ?>/assets/js/mazer.js"></script>
     <script src="<?= base_url(); ?>/assets/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 
+    <!-- footer section -->
     <?= $this->renderSection('footer') ?>
 
     <!-- modal cari -->

@@ -15,6 +15,8 @@
                 <input type="file" class="form-control" name="avatar" id="avatar">
             </div>
             <div class="card-footer">
+                <button type="button" disabled class="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
+
                 <div class="float-end">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-success">Simpan</button>
