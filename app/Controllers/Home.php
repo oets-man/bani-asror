@@ -9,16 +9,17 @@ class Home extends BaseController
     {
         return view('welcome_message');
     }
+
     public function template()
     {
-
         return view('layout/template');
     }
+
     public function voler()
     {
-
         return view('layout/voler');
     }
+
     public function dashboard()
     {
         $data = [

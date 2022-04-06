@@ -31,9 +31,9 @@ class Member extends BaseController
         if (!$member) return redirect()->back();
 
         if ($member->lp == 'L') {
-            $member->avatar = $member->avatar ?: 'male.svg';
+            $member->avatar = $member->avatar ?: 'male-grey.svg';
         } elseif ($member->lp == 'P') {
-            $member->avatar = $member->avatar ?: 'female.svg';
+            $member->avatar = $member->avatar ?: 'female-grey.svg';
         }
 
         $data = [
@@ -240,10 +240,10 @@ class Member extends BaseController
         $no = $request->getPost("start");
 
         foreach ($lists as $list) {
-            $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id)'><i class='bi bi-check2-circle'></i></button>";
+            $tombolSet = "<button type='button' class='btn btn-outline-primary btn-sm' onclick='setMember($list->id)'><i class='fa-solid fa-circle-check'></i></button>";
             $nama = $list->nama;
             if (!$req) {
-                $tombolSet = "<button type='button' class='btn btn-outline-secondary btn-sm' disabled><i class='bi bi-check2-circle'></i></button>";
+                $tombolSet = "<button type='button' class='btn btn-outline-secondary btn-sm' disabled><i class='fa-solid fa-circle-check'></i></button>";
                 $nama = anchor(site_url('member/') . $list->id, $list->nama);
             }
 

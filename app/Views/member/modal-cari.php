@@ -13,7 +13,7 @@
                     <table class="table table-hover" id="table-member-cari" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th class="text-center"><i class="bi bi-check2-circle"></i></th>
+                                <th class="text-center"><i class="fa-solid fa-circle-check"></i></th>
                                 <th>Nama</th>
                                 <th>Bin-1</th>
                                 <th>Bin-2</th>

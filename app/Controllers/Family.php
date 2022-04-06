@@ -28,8 +28,8 @@ class Family extends BaseController
         $family = $this->family->familiesDetail($id);
         if (!$family) return "Not found family $id";
 
-        $family->avatar_suami = $family->avatar_suami ?: 'male.svg';
-        $family->avatar_istri = $family->avatar_istri ?: 'female.svg';
+        $family->avatar_suami = $family->avatar_suami ?: 'male-grey.svg';
+        $family->avatar_istri = $family->avatar_istri ?: 'female-grey.svg';
         // dd($family);
 
         $data = [

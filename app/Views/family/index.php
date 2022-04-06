@@ -5,212 +5,208 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('content') ?>
-<div class="card-header h5 bg-light-success text-success py-3">
-    <?= $header; ?>
-</div>
-<div class="card-body py-2">
-    <div class="row">
-        <!-- data pasangan -->
-        <div class="col-xl-8 col-md-8 col-sm-12">
-            <?php
-            $url = site_url('family/update/') . $family->id;
-            echo form_open($url);
-            ?>
-            <div class="card shadow my-4">
-                <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Pasangan</h5>
+<div class="row">
+    <!-- data pasangan -->
+    <div class="col-xl-8 col-md-8 col-sm-12">
+        <?php
+        $url = site_url('family/update/') . $family->id;
+        echo form_open($url);
+        ?>
+        <div class="card shadow p-0 m-0">
+            <div class="card-header py-2 bg-light-info">
+                <h5 class="my-0">Data Pasangan</h5>
+            </div>
+            <input type="hidden" name="id" value="<?= $family->id; ?>">
+            <div class="card-body p-2">
+                <div class="row mx-0">
+
+                    <!-- Suami -->
+                    <div class="col-xl-6 col-sm-12 border border-1">
+                        <div class="row">
+                            <div class="col-xl-5 col-md-6 col-sm-12 p-1">
+                                <img id="avatar_suami" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_suami; ?>" class="img-thumbnail">
+                            </div>
+                            <div class="col-xl-7 col-md-6 col-sm-12 py-4">
+                                <h6>Suami</h6>
+                                <input type="hidden" name="id_suami" id="id_suami" value="<?= $family->id_suami !== null ? $family->id_suami : NULL; ?>">
+                                <h5 id="suami">
+                                    <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
+                                </h5>
+                                <div class="">
+                                    <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Suami')">Edit</button>
+                                    <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Suami')" <?= $family->id_suami ? '' : 'disabled' ?>>Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Istri -->
+                    <div class="col-xl-6 col-sm-12 border border-1">
+                        <div class="row">
+                            <div class="col-xl-5 col-md-6 col-sm-12 p-1">
+                                <img id="avatar_istri" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_istri; ?>" class="img-thumbnail">
+                            </div>
+                            <div class="col-xl-7 col-md-6 col-sm-12 py-4">
+                                <h6>Istri</h6>
+                                <input type="hidden" name="id_istri" id="id_istri" value="<?= $family->id_istri !== null ? $family->id_istri : NULL; ?>">
+                                <h5 id="suami">
+                                    <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
+                                </h5>
+                                <div class="">
+                                    <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Istri')">Edit</button>
+                                    <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Istri')" <?= $family->id_istri ? '' : 'disabled' ?>>Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
-                <input type="hidden" name="id" value="<?= $family->id; ?>">
-                <div class="card-body py-4 px-4">
-                    <div class="row">
 
-                        <!-- suami -->
-                        <div class="col-xl-6 col-sm-12 border border-1 mb-2">
-                            <div class="row p-2">
-                                <div class="col-xl-5 col-md-6 col-sm-12 p-0">
-                                    <img id="avatar_suami" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_suami; ?>" class="img-thumbnail">
-                                </div>
-                                <div class="col-xl-7 col-md-6 col-sm-12 py-4">
-                                    <h6>Suami</h6>
-                                    <input type="hidden" name="id_suami" id="id_suami" value="<?= $family->id_suami !== null ? $family->id_suami : NULL; ?>">
-                                    <h5 id="suami">
-                                        <?= $family->id_suami !== null ? anchor(site_url('member/') . $family->id_suami, $family->suami) : '-'; ?>
-                                    </h5>
-                                    <div class="">
-                                        <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Suami')">Edit</button>
-                                        <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Suami')" <?= $family->id_suami ? '' : 'disabled' ?>>Hapus</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- istri -->
-                        <div class="col-xl-6 col-sm-12 border border-1 mb-2">
-                            <div class="row p-2">
-                                <div class="col-xl-5 col-md-6 col-sm-12 p-0">
-                                    <img id="avatar_istri" src="<?= base_url('/assets/images/avatars')  . '/' . $family->avatar_istri; ?>" class="img-thumbnail">
-                                </div>
-                                <div class="col-xl-7 col-md-6 col-sm-12 py-4">
-                                    <h6>Istri</h6>
-                                    <input type="hidden" name="id_istri" id="id_istri" value="<?= $family->id_istri !== null ? $family->id_istri : NULL; ?>">
-                                    <h5 id="suami">
-                                        <?= $family->id_istri !== null ? anchor(site_url('member/') . $family->id_istri, $family->istri) : '-'; ?>
-                                    </h5>
-                                    <div class="">
-                                        <button class="my-2 btn btn-outline-warning" type="button" onclick="editPasangan('Istri')">Edit</button>
-                                        <button class="my-2 btn btn-outline-danger" type="button" onclick="hapusPasangan('Istri')" <?= $family->id_istri ? '' : 'disabled' ?>>Hapus</button>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- tanggal nikah status cerai -->
+                <div class="row mt-3">
+                    <div class="col-xl-6 col-sm-12">
+                        <label for="" class="form-label">Tanggal Pernikahan</label>
+                        <div class="input-group mb-3">
+                            <input type="date" name="tgl_nikah" class="form-control datepicker" value="<?= $family->tgl_nikah; ?>">
                         </div>
                     </div>
 
-                    <!-- tanggal nikah status cerai -->
-                    <div class="row">
-                        <div class="col-xl-6 col-sm-12">
-                            <label for="" class="form-label">Tanggal Pernikahan</label>
-                            <div class="input-group mb-3">
-                                <input type="date" name="tgl_nikah" class="form-control datepicker" value="<?= $family->tgl_nikah; ?>">
-                            </div>
-                        </div>
-
-                        <div class=" col-xl-6 col-sm-12">
-                            <label for="" class="form-label">Status Cerai</label>
-                            <div class="input-group mb-3">
-                                <select class="form-select" name="cerai" value="<?= $family->cerai; ?>">
-                                    <option>Pilih</option>
-                                    <option <?= $family->cerai == 'Cerai Hidup' ? "selected='selected'" : null; ?> value="Cerai Hidup">Cerai Hidup</option>
-                                    <option <?= $family->cerai == 'Cerai Mati' ? "selected='selected'" : null; ?> value="Cerai Mati">Cerai Mati</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- alamat prov kab -->
-                    <label for="" class="form-label">Alamat Tinggal</label>
-                    <div class="row">
-                        <div class="col-xl-6 col-sm-12">
-                            <div class="input-group mb-3">
-                                <select class="form-select" name="id_prov" value="<?= $family->id_prov; ?>" id="prov">
-                                    <<option value="">Pilih Provinsi</option>
-                                        <?php foreach ($provinsi as $al) : ?>
-                                            <option <?= $al->id == $family->id_prov ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->provinsi; ?></option>
-                                        <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-sm-12">
-                            <div class="input-group mb-3">
-                                <select class="form-select" name="id_kab" value="<?= $family->id_kab; ?>" id="kab">
-                                    <option value="">Pilih Kabupaten</option>
-                                    <?php foreach ($kabupaten as $al) : ?>
-                                        <option <?= $al->id == $family->id_kab ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->kabupaten . " (" . $al->kab_kota . ")"; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- alamat kec desa -->
-                    <div class="row">
-                        <div class="col-xl-6 col-sm-12">
-                            <div class="input-group mb-3">
-                                <select class="form-select" name="id_kec" value="<?= $family->id_kec; ?>" id="kec">
-                                    <<option value="">Pilih Kecamatan</option>
-                                        <?php foreach ($kecamatan as $al) : ?>
-                                            <option <?= $al->id == $family->id_kec ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->kecamatan; ?></option>
-                                        <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-sm-12">
-                            <div class="input-group mb-3">
-                                <select name="desa" id="desa" class="form-select" value="<?= $family->desa; ?>">
-                                    <option value="">Pilih Desa/ Kelurahan</option>
-                                    <?php foreach ($desa as $al) : ?>
-                                        <option <?= $al->desa == $family->desa ? "selected='selected'" : null; ?> value="<?= $al->desa; ?>"><?= $al->desa; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- alamat jl -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Jl, Gg, Dusun, ..." name="jl" value="<?= $family->jl; ?>">
-                            </div>
+                    <div class=" col-xl-6 col-sm-12">
+                        <label for="" class="form-label">Status Cerai</label>
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="cerai" value="<?= $family->cerai; ?>">
+                                <option>Pilih</option>
+                                <option <?= $family->cerai == 'Cerai Hidup' ? "selected='selected'" : null; ?> value="Cerai Hidup">Cerai Hidup</option>
+                                <option <?= $family->cerai == 'Cerai Mati' ? "selected='selected'" : null; ?> value="Cerai Mati">Cerai Mati</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn btn-danger" onclick="deleteFamily(<?= $family->id; ?>)">Hapus</button>
-                    <div class="float-end">
-                        <button type="submit" class="btn-success btn">Simpan</button>
+                <!-- alamat prov kab -->
+                <label for="" class="form-label">Alamat Tinggal</label>
+                <div class="row">
+                    <div class="col-xl-6 col-sm-12">
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="id_prov" value="<?= $family->id_prov; ?>" id="prov">
+                                <<option value="">Pilih Provinsi</option>
+                                    <?php foreach ($provinsi as $al) : ?>
+                                        <option <?= $al->id == $family->id_prov ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->provinsi; ?></option>
+                                    <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="col-xl-6 col-sm-12">
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="id_kab" value="<?= $family->id_kab; ?>" id="kab">
+                                <option value="">Pilih Kabupaten</option>
+                                <?php foreach ($kabupaten as $al) : ?>
+                                    <option <?= $al->id == $family->id_kab ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->kabupaten . " (" . $al->kab_kota . ")"; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- alamat kec desa -->
+                <div class="row">
+                    <div class="col-xl-6 col-sm-12">
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="id_kec" value="<?= $family->id_kec; ?>" id="kec">
+                                <<option value="">Pilih Kecamatan</option>
+                                    <?php foreach ($kecamatan as $al) : ?>
+                                        <option <?= $al->id == $family->id_kec ? "selected='selected'" : null; ?> value="<?= $al->id; ?>"><?= $al->kecamatan; ?></option>
+                                    <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-sm-12">
+                        <div class="input-group mb-3">
+                            <select name="desa" id="desa" class="form-select" value="<?= $family->desa; ?>">
+                                <option value="">Pilih Desa/ Kelurahan</option>
+                                <?php foreach ($desa as $al) : ?>
+                                    <option <?= $al->desa == $family->desa ? "selected='selected'" : null; ?> value="<?= $al->desa; ?>"><?= $al->desa; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- alamat jl -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Jl, Gg, Dusun, ..." name="jl" value="<?= $family->jl; ?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer p-2 bg-light-info border-0">
+                <button type="button" class="btn btn-danger" onclick="deleteFamily(<?= $family->id; ?>)">Hapus</button>
+                <div class="float-end">
+                    <button type="submit" class="btn-success btn">Simpan</button>
+                </div>
+            </div>
+        </div>
+        <?= form_close(); ?>
+    </div>
+
+    <!-- data anak -->
+    <div class="col-xl-4 col-md-4 col-sm-12">
+        <div class="card shadow p-0 m-0">
+            <div class="card-header py-2 bg-light-info">
+                <h5 class="my-0">Data Anak</h5>
+            </div>
+            <?= form_open('child/saveall'); ?>
+            <div class="card-body p-2">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <td>Urut</td>
+                                <td>Anak</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <?php if (count($child) > 0) : ?>
+                            <tbody>
+                                <?php foreach ($child as $c) : ?>
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="id[]" value="<?= $c->id; ?>">
+                                            <input type="number" name="urut[]" class="form-control-plaintext p-0" value="<?= $c->urut; ?>" style="max-width: fit-content;">
+                                        </td>
+                                        <td><?= anchor(site_url('member/') . $c->id_member, $c->nama); ?></td>
+                                        <td class="text-end">
+                                            <a class="btn btn-sm btn-outline-danger" onclick="deleteChild(<?= $c->id; ?>)"><i class="fa-regular fa-trash-can"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        <?php endif; ?>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer p-2 bg-light-info border-0">
+                <button type="button" class="btn-primary btn" onclick="tambahAnak();">Tambah</button>
+
+
+                <div class="float-end">
+                    <button type="submit" class="btn-success btn">Simpan</button>
                 </div>
             </div>
             <?= form_close(); ?>
         </div>
-
-        <!-- data anak -->
-        <div class="col-xl-4 col-md-4 col-sm-12">
-            <div class="card shadow my-4">
-                <div class="card-header py-2 bg-light-info">
-                    <h5 class="my-0">Data Anak</h5>
-                </div>
-                <?= form_open('child/saveall'); ?>
-                <div class="card-body py-4 px-4">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <td>Urut</td>
-                                    <td>Anak</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <?php if (count($child) > 0) : ?>
-                                <tbody>
-                                    <?php foreach ($child as $c) : ?>
-                                        <tr>
-                                            <td>
-                                                <input type="hidden" name="id[]" value="<?= $c->id; ?>">
-                                                <input type="number" name="urut[]" class="form-control-plaintext" value="<?= $c->urut; ?>" style="max-width: fit-content;">
-                                            </td>
-                                            <td><?= anchor(site_url('member/') . $c->id_member, $c->nama); ?></td>
-                                            <td class="text-end">
-                                                <a class="btn btn-sm btn-outline-danger" onclick="deleteChild(<?= $c->id; ?>)"><i class="bi bi-trash-fill"></i></a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            <?php endif; ?>
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer p-2 bg-light-info border-0">
-                    <button type="button" class="btn-primary btn" onclick="tambahAnak();">Tambah</button>
-
-
-                    <div class="float-end">
-                        <button type="submit" class="btn-success btn">Simpan</button>
-                    </div>
-                </div>
-                <?= form_close(); ?>
-            </div>
-        </div>
-
     </div>
+
 </div>
-
-
 
 <!-- modal edit-->
 <?= view('member/modal-edit') ?>

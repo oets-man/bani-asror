@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Voler Admin Dashboard</title>
+    <title>Radio - Voler Admin Dashboard</title>
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/bootstrap.css">
-
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/vendors/chartjs/Chart.min.css">
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/app.css">
@@ -30,7 +28,7 @@
 
 
 
-                        <li class="sidebar-item active ">
+                        <li class="sidebar-item  ">
                             <a href="index.html" class='sidebar-link'>
                                 <i data-feather="home" width="20"></i>
                                 <span>Dashboard</span>
@@ -139,13 +137,13 @@
 
 
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item active has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i data-feather="file-text" width="20"></i>
                                 <span>Form Elements</span>
                             </a>
 
-                            <ul class="submenu ">
+                            <ul class="submenu active">
 
                                 <li>
                                     <a href="form-element-input.html">Input</a>
@@ -405,265 +403,105 @@
 
             <div class="main-content container-fluid">
                 <div class="page-title">
-                    <h3>Dashboard</h3>
-                    <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>Radio</h3>
+                            <p class="text-subtitle text-muted">Choose one from the list with checkbox</p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class='breadcrumb-header'>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Radio</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
                 </div>
                 <section class="section">
-                    <div class="row mb-2">
-                        <div class="col-12 col-md-3">
-                            <div class="card card-statistic">
-                                <div class="card-body p-0">
-                                    <div class="d-flex flex-column">
-                                        <div class='px-3 py-3 d-flex justify-content-between'>
-                                            <h3 class='card-title'>BALANCE</h3>
-                                            <div class="card-right d-flex align-items-center">
-                                                <p>$50 </p>
-                                            </div>
-                                        </div>
-                                        <div class="chart-wrapper">
-                                            <canvas id="canvas1" style="height:100px !important"></canvas>
-                                        </div>
-                                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Default Radio</h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <div class="card card-statistic">
-                                <div class="card-body p-0">
-                                    <div class="d-flex flex-column">
-                                        <div class='px-3 py-3 d-flex justify-content-between'>
-                                            <h3 class='card-title'>Revenue</h3>
-                                            <div class="card-right d-flex align-items-center">
-                                                <p>$532,2 </p>
-                                            </div>
-                                        </div>
-                                        <div class="chart-wrapper">
-                                            <canvas id="canvas2" style="height:100px !important"></canvas>
-                                        </div>
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Default radio
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <div class="card card-statistic">
-                                <div class="card-body p-0">
-                                    <div class="d-flex flex-column">
-                                        <div class='px-3 py-3 d-flex justify-content-between'>
-                                            <h3 class='card-title'>ORDERS</h3>
-                                            <div class="card-right d-flex align-items-center">
-                                                <p>1,544 </p>
-                                            </div>
-                                        </div>
-                                        <div class="chart-wrapper">
-                                            <canvas id="canvas3" style="height:100px !important"></canvas>
-                                        </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Default checked radio
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <div class="card card-statistic">
-                                <div class="card-body p-0">
-                                    <div class="d-flex flex-column">
-                                        <div class='px-3 py-3 d-flex justify-content-between'>
-                                            <h3 class='card-title'>Sales Today</h3>
-                                            <div class="card-right d-flex align-items-center">
-                                                <p>423 </p>
-                                            </div>
-                                        </div>
-                                        <div class="chart-wrapper">
-                                            <canvas id="canvas4" style="height:100px !important"></canvas>
-                                        </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                        <label class="form-check-label" for="flexRadioDisabled">
+                                            Disabled radio
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioCheckedDisabled" checked disabled>
+                                        <label class="form-check-label" for="flexRadioCheckedDisabled">
+                                            Disabled checked radio
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-4">
-                        <div class="col-md-8">
+                </section>
+                <section class="section">
+                    <div class="row">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class='card-heading p-1 pl-3'>Sales</h3>
+                                    <h4 class="card-title">Colors</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4 col-12">
-                                            <div class="pl-3">
-                                                <h1 class='mt-5'>$21,102</h1>
-                                                <p class='text-xs'><span class="text-green"><i data-feather="bar-chart" width="15"></i> +19%</span> than last month</p>
-                                                <div class="legends">
-                                                    <div class="legend d-flex flex-row align-items-center">
-                                                        <div class='w-3 h-3 rounded-full bg-info me-2'></div><span class='text-xs'>Last Month</span>
-                                                    </div>
-                                                    <div class="legend d-flex flex-row align-items-center">
-                                                        <div class='w-3 h-3 rounded-full bg-blue me-2'></div><span class='text-xs'>Current Month</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <canvas id="bar"></canvas>
-                                        </div>
+                                    <p>Use class <code>.form-check-{color}</code> with <code>.form-check</code> to
+                                        change radio color</p>
+                                    <div class="form-check form-check-primary">
+                                        <input class="form-check-input" type="radio" name="Primary" id="Primary" checked>
+                                        <label class="form-check-label" for="Primary">
+                                            Primary
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title">Orders Today</h4>
-                                    <div class="d-flex ">
-                                        <i data-feather="download"></i>
+                                    <div class="form-check form-check-secondary">
+                                        <input class="form-check-input" type="radio" name="Secondary" id="Secondary" checked>
+                                        <label class="form-check-label" for="Secondary">
+                                            Secondary
+                                        </label>
                                     </div>
-                                </div>
-                                <div class="card-body px-0 pb-0">
-                                    <div class="table-responsive">
-                                        <table class='table mb-0' id="table1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>City</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Graiden</td>
-                                                    <td>vehicula.aliquet@semconsequat.co.uk</td>
-                                                    <td>076 4820 8838</td>
-                                                    <td>Offenburg</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Dale</td>
-                                                    <td>fringilla.euismod.enim@quam.ca</td>
-                                                    <td>0500 527693</td>
-                                                    <td>New Quay</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nathaniel</td>
-                                                    <td>mi.Duis@diam.edu</td>
-                                                    <td>(012165) 76278</td>
-                                                    <td>Grumo Appula</td>
-                                                    <td>
-                                                        <span class="badge bg-danger">Inactive</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Darius</td>
-                                                    <td>velit@nec.com</td>
-                                                    <td>0309 690 7871</td>
-                                                    <td>Ways</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ganteng</td>
-                                                    <td>velit@nec.com</td>
-                                                    <td>0309 690 7871</td>
-                                                    <td>Ways</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Oleg</td>
-                                                    <td>rhoncus.id@Aliquamauctorvelit.net</td>
-                                                    <td>0500 441046</td>
-                                                    <td>Rossignol</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Kermit</td>
-                                                    <td>diam.Sed.diam@anteVivamusnon.org</td>
-                                                    <td>(01653) 27844</td>
-                                                    <td>Patna</td>
-                                                    <td>
-                                                        <span class="badge bg-success">Active</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="form-check form-check-warning">
+                                        <input class="form-check-input" type="radio" name="Warning" id="Warning" checked>
+                                        <label class="form-check-label" for="Warning">
+                                            Warning
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card ">
-                                <div class="card-header">
-                                    <h4>Your Earnings</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="radialBars"></div>
-                                    <div class="text-center mb-5">
-                                        <h6>From last month</h6>
-                                        <h1 class='text-green'>+$2,134</h1>
+                                    <div class="form-check form-check-danger">
+                                        <input class="form-check-input" type="radio" name="Danger" id="Danger" checked>
+                                        <label class="form-check-label" for="Danger">
+                                            Danger
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card widget-todo">
-                                <div class="card-header border-bottom d-flex justify-content-between align-items-center">
-                                    <h4 class="card-title d-flex">
-                                        <i class='bx bx-check font-medium-5 pl-25 pr-75'></i>Progress
-                                    </h4>
-
-                                </div>
-                                <div class="card-body px-0 py-1">
-                                    <table class='table table-borderless'>
-                                        <tr>
-                                            <td class='col-3'>UI Design</td>
-                                            <td class='col-6'>
-                                                <div class="progress progress-info">
-                                                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td class='col-3 text-center'>60%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class='col-3'>VueJS</td>
-                                            <td class='col-6'>
-                                                <div class="progress progress-success">
-                                                    <div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td class='col-3 text-center'>30%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class='col-3'>Laravel</td>
-                                            <td class='col-6'>
-                                                <div class="progress progress-danger">
-                                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td class='col-3 text-center'>50%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class='col-3'>ReactJS</td>
-                                            <td class='col-6'>
-                                                <div class="progress progress-primary">
-                                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td class='col-3 text-center'>80%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class='col-3'>Go</td>
-                                            <td class='col-6'>
-                                                <div class="progress progress-secondary">
-                                                    <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td class='col-3 text-center'>65%</td>
-                                        </tr>
-                                    </table>
+                                    <div class="form-check form-check-success">
+                                        <input class="form-check-input" type="radio" name="Success" id="Success" checked>
+                                        <label class="form-check-label" for="Success">
+                                            Success
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-dark">
+                                        <input class="form-check-input" type="radio" name="Dark" id="Dark" checked>
+                                        <label class="form-check-label" for="Dark">
+                                            Dark
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -686,10 +524,6 @@
     <script src="<?= base_url() ?>/assets/js/feather-icons/feather.min.js"></script>
     <script src="<?= base_url() ?>/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="<?= base_url() ?>/assets/js/app.js"></script>
-
-    <script src="<?= base_url() ?>/assets/vendors/chartjs/Chart.min.js"></script>
-    <script src="<?= base_url() ?>/assets/vendors/apexcharts/apexcharts.min.js"></script>
-    <script src="<?= base_url() ?>/assets/js/pages/dashboard.js"></script>
 
     <script src="<?= base_url() ?>/assets/js/main.js"></script>
 </body>
